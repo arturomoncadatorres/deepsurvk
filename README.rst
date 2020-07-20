@@ -13,7 +13,9 @@ DeepSurvK
         :target: https://deepsurvk.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
-
+.. image:: https://pyup.io/repos/github/arturomoncadatorres/deepsurvk/shield.svg
+        :target: https://pyup.io/repos/github/arturomoncadatorres/deepsurvk/
+        :alt: Updates
 
 
 Implementation of DeepSurv using Keras
