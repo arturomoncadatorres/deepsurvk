@@ -103,3 +103,6 @@ ENV/
 
 # IDE settings
 .vscode/
+
+# Generated example models
+./examples/models/*
