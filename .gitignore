@@ -105,4 +105,4 @@ ENV/
 .vscode/
 
 # Generated example models
-./examples/models/*
+./examples/models
