@@ -4,8 +4,8 @@
 
 from setuptools import setup, find_packages
 
-with open('README.rst') as readme_file:
-    readme = readme_file.read()
+with open("README.md") as f:
+    LONG_DESCRIPTION, LONG_DESC_TYPE = f.read(), "text/markdown"
 
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
@@ -19,14 +19,13 @@ test_requirements = ['pytest>=3', ]
 setup(
     author="Arturo Moncada-Torres",
     author_email='arturomoncadatorres@gmail.com',
-    python_requires='>=3.5',
+    python_requires='>=3.6',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
@@ -39,7 +38,8 @@ setup(
     },
     install_requires=requirements,
     license="MIT license",
-    long_description=readme + '\n\n' + history,
+    long_description=LONG_DESCRIPTION,
+    long_description_content_type=LONG_DESC_TYPE,
     include_package_data=True,
     keywords='deepsurvk',
     name='deepsurvk',
