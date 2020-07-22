@@ -63,7 +63,7 @@ from logzero import logger
 # %% [markdown]
 # Define paths.
 
-#%%
+# %%
 example_file = '00_understanding_deepsurv'
 PATH_DATA = pathlib.Path(r'../data')
 PATH_MODELS = pathlib.Path(f'./models/')
@@ -75,8 +75,8 @@ if not PATH_DATA.exists():
 # If models directory does not exist, create it.
 if not PATH_MODELS.exists():
     PATH_MODELS.mkdir(parents=True)
-    
-    
+
+
 # %% [markdown]
 # ## Get data
 # In this case, we will use the Worcester Heart Attack Study (WHAS) dataset.
@@ -104,7 +104,7 @@ n_patients_train = X_train.shape[0]
 n_features = X_train.shape[1]
 
 
-#%% [markdown]
+# %% [markdown]
 # ## Pre-process data
 # * Standardization <br>
 # First, we need to standardize the input (p. 3).
@@ -112,7 +112,7 @@ n_features = X_train.shape[1]
 # This done to avoid leakage (using information from
 # the testing partition for the model training.)
 
-#%%
+# %%
 X_scaler = StandardScaler().fit(X_train)
 X_train = X_scaler.transform(X_train)
 X_test = X_scaler.transform(X_test)
@@ -124,19 +124,18 @@ Y_test = Y_scaler.transform(Y_test)
 Y_train = Y_train.flatten()
 Y_test = Y_test.flatten()
 
-
-#%% [markdown]
+# %% [markdown]
 # * Sorting <br>
 # This is important, since we are performing a ranking task.
 
-#%%
+# %%
 sort_idx = np.argsort(Y_train)[::-1]
 X_train = X_train[sort_idx]
 Y_train = Y_train[sort_idx]
 E_train = E_train[sort_idx]
 
 
-#%% [markdown]
+# %% [markdown]
 # ## Define the loss function
 # DeepSurv's loss function is the average negative log partial likelihood with
 # regularization (Eq. 4, p. 3):
@@ -145,7 +144,7 @@ E_train = E_train[sort_idx]
 #
 # We can then define the negative log likelihood function as
 
-#%%
+# %%
 def negative_log_likelihood(E):
     def loss(y_true, y_pred):
         
@@ -170,7 +169,7 @@ def negative_log_likelihood(E):
     return loss
 
 
-#%% [markdown]
+# %% [markdown]
 # with regularization added further on (as part of the network architecture).
 #
 # ## Define model parameters
@@ -180,7 +179,7 @@ def negative_log_likelihood(E):
 # If you decide to try a different dataset, be sure to change these
 # accordingly!
 
-#%%
+# %%
 epochs = 500
 activation = 'relu'
 n_nodes = 48
@@ -191,7 +190,7 @@ lr_decay =  6.494e-4
 momentum = 0.863
 
 
-#%% [markdown]
+# %% [markdown]
 #
 # ## Model construction
 # Now we can build the model. We will do this using the `Sequential` 
@@ -207,7 +206,7 @@ momentum = 0.863
 # It is slightly different for each dataset (mainly the optimizer and 
 # number of hidden layers).
 
-#%%
+# %%
 # Create model
 model = Sequential()
 model.add(Dense(units=n_features, activation=activation, kernel_initializer='glorot_uniform', input_shape=(n_features,)))
@@ -229,7 +228,7 @@ model.compile(loss=negative_log_likelihood(E_train), optimizer=optimizer)
 model.summary()
 
 
-#%% [markdown]
+# %% [markdown]
 # Sometimes, the computation of the loss yields a `NaN`, which makes the whole
 # output be `NaN` as well. I haven't identified a pattern, actually I think
 # it is quite random. This could be due to a variety of reasons, including
@@ -241,46 +240,46 @@ model.summary()
 # or until the loss is an `NaN`. After that, training is stopped. Then,
 # we will use the model that yielded the smallest lost.
 
-#%%
+# %%
 callbacks = [tf.keras.callbacks.TerminateOnNaN(),
              tf.keras.callbacks.ModelCheckpoint(str(PATH_MODELS/f'{example_file}.h5'), monitor='loss', save_best_only=True, mode='min')]
 
-#%% [markdown]
+# %% [markdown]
 # ## Model fitting
 # Now we can fit the DeepSurv model! Notice how we use the whole set of 
 # patients in a batch. Furthermore, be sure that `shuffle` is set to `False`, 
 # since order is important in predicting ranked survival.
 
-#%%
+# %%
 history = model.fit(X_train, Y_train, 
                     batch_size=n_patients_train, 
                     epochs=epochs, 
                     callbacks=callbacks,
                     shuffle=False)
 
-#%% [markdown]
+# %% [markdown]
 # We can see how the loss changed with the number of epochs.
 
-#%%
+# %%
 fig, ax = plt.subplots(1, 1, figsize=[5, 5])
 plt.plot(history.history['loss'], label='train')
 ax.set_xlabel("No. epochs")
 ax.set_ylabel("Loss [u.a.]")
 
 
-#%% [markdown]
+# %% [markdown]
 # During training, we saved the model with the lowest loss value (i.e., Early Stop).
 # Now, we need to load it. Since we defined our own custom function,
 # it is important to [use the `compile=False` parameter](https://github.com/keras-team/keras/issues/5916#issuecomment-592269254).
 
-#%%
+# %%
 model = load_model(PATH_MODELS/f'{example_file}.h5', compile=False)
 
-#%% [markdown]
+# %% [markdown]
 # ## Model predictions
 # Finally, we can generate predictions using the DeepSurv model.
 
-#%%
+# %%
 Y_pred_train = np.exp(-model.predict(X_train))
 c_index_train = utils.concordance_index(Y_train, Y_pred_train, E_train)
 print(f"c-index of training dataset = {c_index_train}")
@@ -289,6 +288,6 @@ Y_pred_test = np.exp(-model.predict(X_test))
 c_index_test = utils.concordance_index(Y_test, Y_pred_test, E_test)
 print(f"c-index of testing dataset = {c_index_test}")
 
-#%% [markdown]
+# %% [markdown]
 # We can see that these numbers are within the ballpark estimate of what is
 # reported in the original paper for this dataset (0.86-0.87, Table 1, p. 6).

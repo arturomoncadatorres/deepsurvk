@@ -9,17 +9,15 @@
 
 DeepSurv is a Cox Proportional Hazards deep neural network used for modeling interactions between a patient's covariates and treatment effectiveness. It was originally proposed by [Katzman et. al (2018)](https://bmcmedresmethodol.biomedcentral.com/articles/10.1186/s12874-018-0482-1) and [implemented in Theano (using Lasagne)](https://github.com/jaredleekatzman/DeepSurv).
 
-However, [Theano is no longer supported](https://groups.google.com/forum/#!msg/theano-users/7Poq8BZutbY/rNCIfvAEAwAJ). Therefore, I thought it would be a good idea to do my own implementation of it using Keras, which gave birth to DeepSurvK.
+Unfortunately, [Theano is no longer supported](https://groups.google.com/forum/#!msg/theano-users/7Poq8BZutbY/rNCIfvAEAwAJ). There have been some attempts in recreating DeepSurv in other DL platforms, such as [czifan's `DeepSurv.pytorch`](https://github.com/czifan/DeepSurv.pytorch). [mexchy1000 created `DeepSurv_Keras`](https://github.com/mexchy1000/DeepSurv_Keras). However, it is a very raw prototype: it is not properly documented nor validated. Moreover, it is not being actively supported anymore. Therefore, I used it as a rough starting point for the development of DeepSurvK.
 
-There have been a couple of attempts to do so before. For example, [`mexchy1000` has a raw implementation](https://github.com/mexchy1000/DeepSurv_Keras). However, it is not properly documented, it is not validated, and it is not being actively supported anymore. Thus I used that as a rough starting point for the implementation presented here.
-
-This is my first Python package. I am sure there are many places where it could be improved. Feedback is always welcome.
+This is my first Python package. I am sure there are many places where it could be improved. Feedback is always welcome!
 
 ## :bookmark_tabs: Documentation
 You can find the complete package's documentation [here](https://deepsurvk.readthedocs.io).
 
 ## Features
-* TODO
+* Implemented using Keras (using Tensor Flow 2)
 
 ## License
 This package uses the MIT license
