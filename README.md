@@ -16,10 +16,10 @@ This is my first Python package. I am sure there are many places where it could 
 ## :bookmark_tabs: Documentation
 You can find the complete package's documentation [here](https://deepsurvk.readthedocs.io).
 
-## Features
-* Implemented using Keras (using Tensor Flow 2)
+## :tada: Features
+* Implemented using Keras (using TensorFlow 2)
 
-## License
+## :page_with_curl: License
 This package uses the MIT license
 
 ## :black_nib: References
@@ -28,5 +28,5 @@ If you are using DeepSurvK, please cite the original DeepSurv paper, as well as 
 > * Katzman, Jared L., et al. ["DeepSurv: personalized treatment recommender system using a Cox proportional hazards deep neural network."](https://link.springer.com/article/10.1186/s12874-018-0482-1) BMC medical research methodology 18.1 (2018): 24. [[BibTeX](https://scholar.googleusercontent.com/scholar.bib?q=info:hG13Z0IGDPkJ:scholar.google.com/&output=citation&scisdr=CgXVK4mOEOOa6e7oHyc:AAGBfm0AAAAAXxbtByd6uXB8fbxpWDom9eCJp71TAtUO&scisig=AAGBfm0AAAAAXxbtB35QPVsdnSAHsADGSX408btb6Gvf&scisf=4&ct=citation&cd=-1&hl=en)]
 > * Arturo Moncada-Torres. DeepSurvK. Accessed on [MONTH, 20XX].
 
-## Credits
+## :label: Credits
 This package was created with [Cookiecutter](https://github.com/cookiecutter/cookiecutter) and the [`arturomoncadatorres/cookiecutter-pypackage` project template](https://github.com/arturomoncadatorres/cookiecutter-pypackage)
