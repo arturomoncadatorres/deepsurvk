@@ -19,9 +19,11 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('..'))
 
+sys.path.insert(0, os.path.abspath('..'))
 import deepsurvk
+
+from datetime import date
 import sphinx_rtd_theme
 
 # -- General configuration ---------------------------------------------
@@ -32,7 +34,12 @@ import sphinx_rtd_theme
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.autodoc', 'sphinx.ext.viewcode', 'sphinx_rtd_theme']
+extensions = ['sphinx.ext.autodoc', # Pull documentation from docstrings
+              'sphinx.ext.mathjax', # Render math via JavaScript
+              'sphinx.ext.viewcode', # Add links to highlighted source code
+              'sphinx.ext.autosectionlabel', # Allow reference sections using its title
+              'sphinx.ext.napoleon', # Support NumPy and Google style docstrings
+              'sphinx_rtd_theme']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -48,7 +55,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'DeepSurvK'
-copyright = "2020, Arturo Moncada-Torres"
+copyright = '2020-{},  Arturo Moncada-Torres'.format(date.today().year)
 author = "Arturo Moncada-Torres"
 
 # The version info for the project you're documenting, acts as replacement
@@ -67,6 +74,16 @@ release = deepsurvk.__version__
 # Usually you set "language" from the command line for these cases.
 language = None
 
+# Define auto configuration.
+autoclass_content = "both"  # Include both __init__ and class docstring
+autodoc_default_flags = [
+    # Make sure that any autodoc declarations show the right members
+    "members",
+    "inherited-members",
+    "show-inheritance",
+]
+autosummary_generate = True  # Make _autosummary files and include them
+
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This patterns also effect to html_static_path and html_extra_path
@@ -83,8 +100,6 @@ todo_include_todos = False
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-#
-#html_theme = 'alabaster'
 html_theme = "sphinx_rtd_theme"
 
 # Theme options are theme-specific and customize the look and feel of a
@@ -104,24 +119,23 @@ html_static_path = ['_static']
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'deepsurvkdoc'
 
+# treat ``x, y : type`` as vars x and y instead of default ``y(x,) : type``
+# See https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html#confval-napoleon_use_param
+napoleon_use_param = False
 
 # -- Options for LaTeX output ------------------------------------------
 
 latex_elements = {
     # The paper size ('letterpaper' or 'a4paper').
-    #
-    # 'papersize': 'letterpaper',
+    # 'papersize': 'a4paper',
 
     # The font size ('10pt', '11pt' or '12pt').
-    #
     # 'pointsize': '10pt',
 
     # Additional stuff for the LaTeX preamble.
-    #
     # 'preamble': '',
 
     # Latex figure (float) alignment
-    #
     # 'figure_align': 'htbp',
 }
 
@@ -156,7 +170,7 @@ texinfo_documents = [
      'DeepSurvK Documentation',
      author,
      'deepsurvk',
-     'One line description of project.',
+     'Implementation of DeepSurv using Keras.',
      'Miscellaneous'),
 ]
 

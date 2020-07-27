@@ -10,7 +10,7 @@ with open("README.md") as f:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = [ ]
+requirements = ['pygments>=2.5.1', ]
 
 setup_requirements = ['pytest-runner', ]
 
