@@ -7,7 +7,7 @@ from pkg_resources import resource_filename
 def _load_dataset(filename, partition='complete', **kwargs):
     """
     Load an example dataset from deepsurvk.datasets.
-    All datasets correspond to the ones used originally in [1]::
+    All datasets correspond to the ones used originally in [1].
     
     Parameters
     ----------
@@ -77,7 +77,7 @@ def load_metabric(partition='complete', **kwargs):
 
 def load_rgbsg(partition='complete', **kwargs):
     """
-    The training partition belongs to the Rotterdam tumor bank dataset [`].
+    The training partition belongs to the Rotterdam tumor bank dataset [1].
     It contains records of 1546 patients with node-positive breast cancer.
     Nearly 90% of the patients have an observed death time. 
     
