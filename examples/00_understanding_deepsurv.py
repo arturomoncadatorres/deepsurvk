@@ -65,7 +65,7 @@ from logzero import logger
 
 # %%
 example_file = '00_understanding_deepsurv'
-PATH_DATA = pathlib.Path(r'../data')
+PATH_DATA = pathlib.Path(r'../deepsurvk/datasets/data')
 PATH_MODELS = pathlib.Path(f'./models/')
 
 # Make sure data directory exists.
@@ -232,13 +232,15 @@ model.summary()
 # Sometimes, the computation of the loss yields a `NaN`, which makes the whole
 # output be `NaN` as well. I haven't identified a pattern, actually I think
 # it is quite random. This could be due to a variety of reasons, including
-# model parametrization. However, I don't really want to use different 
-# parameters than those reported. Therefore, we will use a technique called
-# Early Stopping.
+# model parametrization (however, I don't really want to use different 
+# parameters than those reported), maybe even unfortunate parameter 
+# initialization. Therefore, we will use a technique called "Early Stopping".
 #
 # In this case, we will train the model until the number of epochs is reached
-# or until the loss is an `NaN`. After that, training is stopped. Then,
-# we will use the model that yielded the smallest lost.
+# *or* until the loss is an `NaN`. After that, training is stopped. Then,
+# we will selected and use the model that yielded the smallest lost.
+#
+# We can achieve this very easily using [callbacks](https://www.tensorflow.org/api_docs/python/tf/keras/callbacks/Callback)
 
 # %%
 callbacks = [tf.keras.callbacks.TerminateOnNaN(),

@@ -29,4 +29,4 @@ If you are using DeepSurvK, please cite the original DeepSurv paper, as well as 
 > * Arturo Moncada-Torres. DeepSurvK. Accessed on [MONTH, 20XX].
 
 ## :label: Credits
-This package was created with [Cookiecutter](https://github.com/cookiecutter/cookiecutter) and the [`arturomoncadatorres/cookiecutter-pypackage` project template](https://github.com/arturomoncadatorres/cookiecutter-pypackage)
+This package was developed in [Spyder](https://www.spyder-ide.org/) (a fantastic open-source Python IDE) using [Cookiecutter](https://github.com/cookiecutter/cookiecutter) and the [`arturomoncadatorres/cookiecutter-pypackage` project template](https://github.com/arturomoncadatorres/cookiecutter-pypackage).
