@@ -19,12 +19,11 @@
 #
 import os
 import sys
-import deepsurvk
 
 sys.path.insert(0, os.path.abspath('.'))
+import deepsurvk
 
 from datetime import date
-
 import sphinx_rtd_theme
 
 # -- General configuration ---------------------------------------------
