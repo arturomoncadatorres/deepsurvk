@@ -13,6 +13,13 @@ Welcome to DeepSurvK's documentation!
    authors
    history
 
+.. toctree::
+   :maxdepth: 1
+   :caption: Additional documentation
+
+   api
+
+
 Indices and tables
 ==================
 * :ref:`genindex`
