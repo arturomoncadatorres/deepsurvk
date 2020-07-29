@@ -14,12 +14,12 @@
 import os
 import sys
 
-# # Allow docs of modules that use numpy, scipy, and other modules with C code.
-# # See http://blog.rtwilson.com/how-to-make-your-sphinx-documentation-compile-with-readthedocs-when-youre-using-numpy-and-scipy/
-# import mock
-# MOCK_MODULES = ['numpy'] # Other possible modules include scipy.
-# for mod_name in MOCK_MODULES:
-#     sys.modules[mod_name] = mock.Mock()
+# Allow docs of modules that use numpy, scipy, and other modules with C code.
+# See http://blog.rtwilson.com/how-to-make-your-sphinx-documentation-compile-with-readthedocs-when-youre-using-numpy-and-scipy/
+import mock
+MOCK_MODULES = ['pandas', 'numpy'] # Other possible modules include scipy.
+for mod_name in MOCK_MODULES:
+    sys.modules[mod_name] = mock.Mock()
     
 # If extensions (or modules to document with autodoc) are in another
 # directory, add these directories to sys.path here. If the directory is
