@@ -1,6 +1,6 @@
 datasets
 ==================
 
-.. automodule:: deepsurvk.datasets
+.. automodule:: datasets
     :members:
     :undoc-members:
