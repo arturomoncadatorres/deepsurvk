@@ -11,6 +11,7 @@ with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
 requirements = ['pygments>=2.5.1', 
+                'pandas>=1.0.0',
                 'numpy>=1.14.0',
                 'h5py>=2.10.0']
 
