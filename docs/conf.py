@@ -14,12 +14,9 @@
 import os
 import sys
 
-# # Allow docs of modules that use numpy, scipy, and other modules with C code.
-# # See http://blog.rtwilson.com/how-to-make-your-sphinx-documentation-compile-with-readthedocs-when-youre-using-numpy-and-scipy/
-# import mock
-# MOCK_MODULES = ['pandas', 'numpy', 'h5py'] # Possible modules include pandas, numpy, and h5py
-# for mod_name in MOCK_MODULES:
-#     sys.modules[mod_name] = mock.Mock()
+# Allow docs of modules that use numpy, scipy, and other modules with C code.
+# See https://github.com/readthedocs/readthedocs.org/issues/4210
+# and https://docs.readthedocs.io/en/latest/faq.html#i-get-import-errors-on-libraries-that-depend-on-c-modules
 autodoc_mock_imports = ['pandas', 'numpy', 'h5py'] # Possible modules include pandas, numpy, and h5py
     
 # If extensions (or modules to document with autodoc) are in another

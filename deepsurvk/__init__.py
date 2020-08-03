@@ -1,5 +1,12 @@
+# -*- coding: utf-8 -*-
 """Top-level package for DeepSurvK."""
 
-__author__ = """Arturo Moncada-Torres"""
-__email__ = 'arturomoncadatorres@gmail.com'
-__version__ = '0.1.0'
+
+import deepsurvk.network.deepsurvk
+
+from deepsurvk.network.deepsurvk import DeepSurvK
+
+from deepsurvk.version import __version__
+
+__all__ = ['__version__',
+           'DeepSurvK']
