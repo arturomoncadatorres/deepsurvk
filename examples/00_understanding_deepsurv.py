@@ -142,7 +142,12 @@ E_train = E_train[sort_idx]
 #    
 # $$l_{\theta} = -\frac{1}{N_{E=1}} \sum_{i:E_i=1} \left( \hat{h}_\theta(x_i) -\log \sum_{j \in {\rm I\!R}(T_i)} \exp^{\hat{h}_\theta(x_j)} \right) + \lambda \cdot \Vert \theta \Vert_2^2 $$
 #
-# We can then define the negative log likelihood function as
+# We can see that our loss function depends on three parameters:
+# `y_true`, `y_pred`, *and* `E`. Unfortunately, custom loss functions in Keras
+# [need to have their signature (i.e., prototype) as](https://keras.io/api/losses/#creating-custom-losses)
+# `loss_fn(y_true, y_pred)`. To overcome this, we will use a [small trick](https://github.com/keras-team/keras/issues/2121)
+# that is actually well known in the community. This way, we can define the 
+# negative log likelihood function as
 
 # %%
 def negative_log_likelihood(E):
@@ -171,6 +176,8 @@ def negative_log_likelihood(E):
 
 # %% [markdown]
 # with regularization added further on (as part of the network architecture).
+#
+# Notice that our loss function
 #
 # ## Define model parameters
 # Nothing spectacular here. You can see these are pretty standard parameters.
