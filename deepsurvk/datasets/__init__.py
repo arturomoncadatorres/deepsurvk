@@ -23,7 +23,10 @@ def _load_dataset(filename, partition='complete', **kwargs):
         
     Returns
     -------
-        dataset: pandas DataFrame
+        X, Y, E: tuple of numpy arrays
+            X - Features
+            Y - Target variable
+            E - Event variable
         
     References
     ----------
@@ -45,15 +48,21 @@ def _load_dataset(filename, partition='complete', **kwargs):
         Y_test = f['test']['t'][()].reshape(-1, 1)
         
     if partition == 'training' or partition == 'train':
-        dataset = X_train
+        X = X_train
+        Y = Y_train
+        E = E_train
     elif partition == 'testing' or partition == 'test':
-        dataset = X_test
+        X = X_test
+        Y = Y_test
+        E = E_test
     elif partition == 'complete':
-        dataset = np.concatenate((X_train, X_test), axis=0)
+        X = np.concatenate((X_train, X_test), axis=0)
+        Y = np.concatenate((Y_train, Y_test), axis=0)
+        E = np.concatenate((E_train, E_test), axis=0)
     else:
         raise ValueError('Invalid partition.')
 
-    return dataset
+    return X, Y, E
 
 
 def load_metabric(partition='complete', **kwargs):
