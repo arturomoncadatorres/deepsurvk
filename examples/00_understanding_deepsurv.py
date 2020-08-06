@@ -177,8 +177,6 @@ def negative_log_likelihood(E):
 # %% [markdown]
 # with regularization added further on (as part of the network architecture).
 #
-# Notice that our loss function
-#
 # ## Define model parameters
 # Nothing spectacular here. You can see these are pretty standard parameters.
 # We will use the values reported in Table 2 (p. 10).
@@ -187,7 +185,6 @@ def negative_log_likelihood(E):
 # accordingly!
 
 # %%
-epochs = 500
 activation = 'relu'
 n_nodes = 48
 learning_rate = 0.067
@@ -260,6 +257,7 @@ callbacks = [tf.keras.callbacks.TerminateOnNaN(),
 # since order is important in predicting ranked survival.
 
 # %%
+epochs = 500
 history = model.fit(X_train, Y_train, 
                     batch_size=n_patients_train, 
                     epochs=epochs, 
