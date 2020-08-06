@@ -4,6 +4,8 @@
 
 from setuptools import setup, find_packages
 
+exec(compile(open("deepsurvk/version.py").read(), "deepsurvk/version.py", "exec"))
+
 with open("README.md") as f:
     LONG_DESCRIPTION, LONG_DESC_TYPE = f.read(), "text/markdown"
 
@@ -49,6 +51,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/arturomoncadatorres/deepsurvk',
-    version='0.1.0',
+    version=__version__,
     zip_safe=False,
 )
