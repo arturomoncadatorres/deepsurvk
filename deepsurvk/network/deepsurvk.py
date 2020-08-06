@@ -3,23 +3,14 @@
 deepsurvk.py
 Defines the actual DeepSurvK network.
 """
-
-import pathlib
-import numpy as np
-
 import tensorflow as tf
-from tensorflow.keras.models import Model, Sequential, load_model
+from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, ActivityRegularization
 from tensorflow.keras.optimizers import SGD, Nadam, RMSprop
 from tensorflow.keras.regularizers import l2
-from tensorflow.keras.utils import plot_model
 
-from lifelines.utils import concordance_index as c_index
-
-from matplotlib import pyplot as plt
-
-import logzero
-from logzero import logger
+# import logzero
+# from logzero import logger
 
 __all__ = ['DeepSurvK', 'negative_log_likelihood', 'common_callbacks']
 
@@ -129,6 +120,32 @@ def DeepSurvK(n_features,
 
 # %%
 def negative_log_likelihood(E):
+    """
+    Define the (custom) loss function as proposed in [1]. 
+    It describes the negative log likelihood, which needs to be minimized.
+    
+    Normally, custom loss functions in Keras need to have their signature 
+    (i.e., prototype) as `loss_fn(y_true, y_pred)` [2]. However, this 
+    function depends also on E. To overcome this, we use a small trick
+    in which we wrap the loss function with the proper signature into
+    another function that actually received the additional parameters [3].
+
+    Parameters
+    ----------
+    E: numpy array
+        Event variable.
+            
+    Returns
+    -------
+    loss: function
+        Negative log likelihood loss function
+        
+    References
+    ----------
+    [1] Katzman, Jared L., et al. "DeepSurv: personalized treatment recommender system using a Cox proportional hazards deep neural network." BMC medical research methodology 18.1 (2018): 24.
+    [2] https://keras.io/api/losses/#creating-custom-losses
+    [3] https://github.com/keras-team/keras/issues/2121
+    """
     def loss(y_true, y_pred):
         
         hazard_ratio = tf.math.exp(y_pred)        
@@ -154,7 +171,37 @@ def negative_log_likelihood(E):
 
 #%%
 def common_callbacks():
+    """
+    Create a list of Keras callbacks [1] that are commonly used by DeepSurvK.
+    
+    Sometimes, the computation of the loss yields a `NaN`. This could be 
+    due to a variety of reasons, including model parametrization
+    and unfortunate initialization. To counter that, we will use 
+    early stopping. In this case, the model training will finish until 
+    the number of epochs is reached *or* until the loss is an `NaN`. 
+    After that, training is stopped. 
+    
+    Additionally, we will use a callback to create a checkpoint and use
+    the model that yielded the smallest lost (which doesn't necessarily 
+    correspond to the model at the last epoch).
+    
+    Notice that using these callbacks is not mandatory for DeepSurvK.
+    Actually, you can use your own preferred callbacks, if you wish.
 
+    Parameters
+    ----------
+    None
+            
+    Returns
+    -------
+    callbacks: list
+        The first element is a callback for TerminateOnNaN().
+        The second element is a callback for ModelCheckpoint().
+        
+    References
+    ----------
+    [1] https://www.tensorflow.org/api_docs/python/tf/keras/callbacks/Callback
+    """
     callbacks = []
     callbacks.append(tf.keras.callbacks.TerminateOnNaN())
     callbacks.append(tf.keras.callbacks.ModelCheckpoint(f'_temp.h5', monitor='loss', save_best_only=True, mode='min'))

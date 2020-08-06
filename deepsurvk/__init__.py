@@ -13,4 +13,5 @@ from deepsurvk.version import __version__
 __all__ = ['__version__',
            'DeepSurvK',
            'negative_log_likelihood',
+           'common_callbacks',
            'concordance_index']
