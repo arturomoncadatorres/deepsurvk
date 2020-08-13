@@ -95,7 +95,7 @@ Data similar to `simulated_gaussian` plus an additional `treatment` column.
 | Variable name | Description | Units | Possible values  |
 |---------------|-------------|-------|------------------|
 | `age`         | Age at diagnosis        | [years]| Continuous                |
-| `sex`         | Sex       | - | 0 - ? <br> 1 - ?             |
+| `sex`         | Sex       | - | 0 - Male <br> 1 - Female             |
 | `race`        | Race      | - | 0 - ? <br> 1 - ? <br> 2 - ? <br> 3 - ? <br> 4 - ? <br> 5 - ? <br> 6 - ? <br> 7 - ? <br> 8 - ? <br> 9 - ? |
 | `n_comorbidities`         | Number of comorbidities | - | - |
 | `diabetes`    | Patient suffers from diabetes | - | 0 - No <br> 1 - Yes |
