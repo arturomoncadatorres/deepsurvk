@@ -3,5 +3,5 @@ API Reference
 
 .. toctree::
 
-    deepsurvk.datasets
     deepsurvk.network
+    deepsurvk.datasets
