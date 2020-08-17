@@ -59,8 +59,8 @@ from deepsurvk.datasets import load_whas
 # top).
 
 # %%
-X_train, Y_train, E_train, = load_whas(partition='training')
-X_test, Y_test, E_test = load_whas(partition='testing')
+X_train, Y_train, E_train, = load_whas(partition='training', data_type='np')
+X_test, Y_test, E_test = load_whas(partition='testing', data_type='np')
 
 # %% [markdown]
 # These `training` and `testing` partitions correspond to the original
@@ -172,15 +172,16 @@ epochs = 500
 history = dsk.fit(X_train, Y_train, 
                   batch_size=n_patients_train,
                   epochs=epochs, 
+                  callbacks=callbacks,
                   shuffle=False)
 
 
-# %%
-fig, ax = plt.subplots(1, 1, figsize=[5, 5])
-plt.plot(history.history['loss'], label='train')
-ax.set_xlabel("No. epochs")
-ax.set_ylabel("Loss [u.a.]")
+# %% [markdown]
+# DeepSurvK provides a few wrappers to generate visualizations that are
+# often required fast and easy.
 
+# %%
+deepsurv.plot_loss(history)
 
 # %% [markdown]
 # ## Model predictions
