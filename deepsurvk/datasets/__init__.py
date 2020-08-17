@@ -6,7 +6,7 @@ from pkg_resources import resource_filename
 
 
 #%%
-def _load_dataset(filename, partition='complete', data_type='numpy', **kwargs):
+def _load_dataset(filename, partition='complete', data_type='pandas', **kwargs):
     """
     Load an example dataset from deepsurvk.datasets.
     All datasets correspond to the ones used originally in [1].
@@ -22,12 +22,14 @@ def _load_dataset(filename, partition='complete', data_type='numpy', **kwargs):
             'testing' or 'test' - Testing partition as used in the original DeepSurv
     data_type: string
         Data type of the data. Possible values are:
-            'numpy' or 'np' - NumPy array (default)
-            'pandas' or 'pd' or 'dataframe' or 'df' - pandas DataFrame
-        
+            'pandas' or 'pd' or 'dataframe' or 'df' - pandas DataFrame (default)
+            'numpy' or 'np' - NumPy array
+        Note that NumPy is supported as an option, but DeepSurvK is built
+        with Pandas in mind.
+            
     Returns
     -------
-    X, Y, E: tuple of NumPy arrays or pandas DataFrames
+    X, Y, E: tuple of pandas DataFrames
         X - Features
         Y - Target variable
         E - Event variable
@@ -67,7 +69,7 @@ def _load_dataset(filename, partition='complete', data_type='numpy', **kwargs):
     else:
         raise ValueError('Invalid partition.')
 
-    # If NumPy, do nothing (data are already a NumPy array).
+    # If NumPy, do nothing (already in that format).
     if (data_type == 'numpy') or (data_type=='np') or (data_type=='array'):
         pass
     
@@ -189,6 +191,27 @@ def load_metabric(partition='complete', **kwargs):
     
     For more information, see [1] as well as the accompanying README.
     
+    Parameters
+    ----------
+    partition: string
+        Partition of the data to load. Possible values are:
+            'complete' - The whole dataset (default)
+            'training' or 'train' - Training partition as used in the original DeepSurv
+            'testing' or 'test' - Testing partition as used in the original DeepSurv
+    data_type: string
+        Data type of the data. Possible values are:
+            'pandas' or 'pd' or 'dataframe' or 'df' - pandas DataFrame (default)
+            'numpy' or 'np' - NumPy array
+        Note that NumPy is supported as an option, but DeepSurvK is built
+        with Pandas in mind.
+            
+    Returns
+    -------
+    X, Y, E: tuple of pandas DataFrames
+        X - Features
+        Y - Target variable
+        E - Event variable
+    
     References
     ----------
     [1] Curtis, Christina, et al. "The genomic and transcriptomic architecture of 2,000 breast tumours reveals novel subgroups." Nature 486.7403 (2012): 346-352.
@@ -210,6 +233,27 @@ def load_rgbsg(partition='complete', **kwargs):
     
     For more information, see [1] and [2], as well as the accompanying README.
     
+    Parameters
+    ----------
+    partition: string
+        Partition of the data to load. Possible values are:
+            'complete' - The whole dataset (default)
+            'training' or 'train' - Training partition as used in the original DeepSurv
+            'testing' or 'test' - Testing partition as used in the original DeepSurv
+    data_type: string
+        Data type of the data. Possible values are:
+            'pandas' or 'pd' or 'dataframe' or 'df' - pandas DataFrame (default)
+            'numpy' or 'np' - NumPy array
+        Note that NumPy is supported as an option, but DeepSurvK is built
+        with Pandas in mind.
+            
+    Returns
+    -------
+    X, Y, E: tuple of pandas DataFrames
+        X - Features
+        Y - Target variable
+        E - Event variable
+    
     References
     ----------
     [1] Foekens, John A., et al. "The urokinase system of plasminogen activation and prognosis in 2780 breast cancer patients." Cancer research 60.3 (2000): 636-643.
@@ -226,6 +270,27 @@ def load_simulated_gaussian(partition='complete', **kwargs):
     
     For more information, see [1] as well as the accompanying README.
     
+    Parameters
+    ----------
+    partition: string
+        Partition of the data to load. Possible values are:
+            'complete' - The whole dataset (default)
+            'training' or 'train' - Training partition as used in the original DeepSurv
+            'testing' or 'test' - Testing partition as used in the original DeepSurv
+    data_type: string
+        Data type of the data. Possible values are:
+            'pandas' or 'pd' or 'dataframe' or 'df' - pandas DataFrame (default)
+            'numpy' or 'np' - NumPy array
+        Note that NumPy is supported as an option, but DeepSurvK is built
+        with Pandas in mind.
+            
+    Returns
+    -------
+    X, Y, E: tuple of pandas DataFrames
+        X - Features
+        Y - Target variable
+        E - Event variable
+        
     References
     ----------
     [1] Katzman, Jared L., et al. "DeepSurv: personalized treatment recommender system using a Cox proportional hazards deep neural network." BMC medical research methodology 18.1 (2018): 24.
@@ -239,6 +304,27 @@ def load_simulated_linear(partition='complete', **kwargs):
     Synthetic data with a linear log-risk function.
     
     For more information, see [1] as well as the accompanying README.
+    
+    Parameters
+    ----------
+    partition: string
+        Partition of the data to load. Possible values are:
+            'complete' - The whole dataset (default)
+            'training' or 'train' - Training partition as used in the original DeepSurv
+            'testing' or 'test' - Testing partition as used in the original DeepSurv
+    data_type: string
+        Data type of the data. Possible values are:
+            'pandas' or 'pd' or 'dataframe' or 'df' - pandas DataFrame (default)
+            'numpy' or 'np' - NumPy array
+        Note that NumPy is supported as an option, but DeepSurvK is built
+        with Pandas in mind.
+            
+    Returns
+    -------
+    X, Y, E: tuple of pandas DataFrames
+        X - Features
+        Y - Target variable
+        E - Event variable
     
     References
     ----------
@@ -254,6 +340,27 @@ def load_simulated_treatment(partition='complete', **kwargs):
     column representing treatment.
     
     For more information, see [1] as well as the accompanying README.
+    
+    Parameters
+    ----------
+    partition: string
+        Partition of the data to load. Possible values are:
+            'complete' - The whole dataset (default)
+            'training' or 'train' - Training partition as used in the original DeepSurv
+            'testing' or 'test' - Testing partition as used in the original DeepSurv
+    data_type: string
+        Data type of the data. Possible values are:
+            'pandas' or 'pd' or 'dataframe' or 'df' - pandas DataFrame (default)
+            'numpy' or 'np' - NumPy array
+        Note that NumPy is supported as an option, but DeepSurvK is built
+        with Pandas in mind.
+            
+    Returns
+    -------
+    X, Y, E: tuple of pandas DataFrames
+        X - Features
+        Y - Target variable
+        E - Event variable
     
     References
     ----------
@@ -295,6 +402,27 @@ def load_whas(partition='complete', **kwargs):
     
     For more information, see [1] as well as the accompanying README.
     
+    Parameters
+    ----------
+    partition: string
+        Partition of the data to load. Possible values are:
+            'complete' - The whole dataset (default)
+            'training' or 'train' - Training partition as used in the original DeepSurv
+            'testing' or 'test' - Testing partition as used in the original DeepSurv
+    data_type: string
+        Data type of the data. Possible values are:
+            'pandas' or 'pd' or 'dataframe' or 'df' - pandas DataFrame (default)
+            'numpy' or 'np' - NumPy array
+        Note that NumPy is supported as an option, but DeepSurvK is built
+        with Pandas in mind.
+            
+    Returns
+    -------
+    X, Y, E: tuple of pandas DataFrames
+        X - Features
+        Y - Target variable
+        E - Event variable
+        
     References
     ----------
     [1] Hosmer Jr, David W., Stanley Lemeshow, and Susanne May. Applied survival analysis: regression modeling of time-to-event data. Vol. 618. John Wiley & Sons, 2011.

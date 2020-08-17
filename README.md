@@ -18,6 +18,7 @@ You can find the complete package's documentation [here](https://deepsurvk.readt
 
 ## :tada: Features
 * Implemented using Keras (using TensorFlow 2)
+* Uses data as pandas DataFrames
 
 ## :page_with_curl: License
 This package uses the MIT license
