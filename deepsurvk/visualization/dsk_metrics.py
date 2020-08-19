@@ -11,7 +11,7 @@ __all__ = ['plot_loss']
 
 
 #%%
-# A few tweakes to make plots pretty.
+# A few tweeks to make plots pretty.
 
 sns.set(style="whitegrid")
 sns.set(font_scale=1.25)

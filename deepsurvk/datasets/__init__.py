@@ -25,7 +25,7 @@ def _load_dataset(filename, partition='complete', data_type='pandas', **kwargs):
             'pandas' or 'pd' or 'dataframe' or 'df' - pandas DataFrame (default)
             'numpy' or 'np' - NumPy array
         Note that NumPy is supported as an option, but DeepSurvK is built
-        with Pandas in mind.
+        with pandas in mind.
             
     Returns
     -------
@@ -203,7 +203,7 @@ def load_metabric(partition='complete', **kwargs):
             'pandas' or 'pd' or 'dataframe' or 'df' - pandas DataFrame (default)
             'numpy' or 'np' - NumPy array
         Note that NumPy is supported as an option, but DeepSurvK is built
-        with Pandas in mind.
+        with pandas in mind.
             
     Returns
     -------
@@ -245,7 +245,7 @@ def load_rgbsg(partition='complete', **kwargs):
             'pandas' or 'pd' or 'dataframe' or 'df' - pandas DataFrame (default)
             'numpy' or 'np' - NumPy array
         Note that NumPy is supported as an option, but DeepSurvK is built
-        with Pandas in mind.
+        with pandas in mind.
             
     Returns
     -------
@@ -282,7 +282,7 @@ def load_simulated_gaussian(partition='complete', **kwargs):
             'pandas' or 'pd' or 'dataframe' or 'df' - pandas DataFrame (default)
             'numpy' or 'np' - NumPy array
         Note that NumPy is supported as an option, but DeepSurvK is built
-        with Pandas in mind.
+        with pandas in mind.
             
     Returns
     -------
@@ -317,7 +317,7 @@ def load_simulated_linear(partition='complete', **kwargs):
             'pandas' or 'pd' or 'dataframe' or 'df' - pandas DataFrame (default)
             'numpy' or 'np' - NumPy array
         Note that NumPy is supported as an option, but DeepSurvK is built
-        with Pandas in mind.
+        with pandas in mind.
             
     Returns
     -------
@@ -353,7 +353,7 @@ def load_simulated_treatment(partition='complete', **kwargs):
             'pandas' or 'pd' or 'dataframe' or 'df' - pandas DataFrame (default)
             'numpy' or 'np' - NumPy array
         Note that NumPy is supported as an option, but DeepSurvK is built
-        with Pandas in mind.
+        with pandas in mind.
             
     Returns
     -------
@@ -414,7 +414,7 @@ def load_whas(partition='complete', **kwargs):
             'pandas' or 'pd' or 'dataframe' or 'df' - pandas DataFrame (default)
             'numpy' or 'np' - NumPy array
         Note that NumPy is supported as an option, but DeepSurvK is built
-        with Pandas in mind.
+        with pandas in mind.
             
     Returns
     -------
