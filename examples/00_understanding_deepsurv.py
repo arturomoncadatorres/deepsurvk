@@ -42,7 +42,6 @@ from tensorflow.keras.layers import Dense, Dropout, ActivityRegularization
 from tensorflow.keras.optimizers import SGD, Nadam, RMSprop
 from tensorflow.keras.regularizers import l2
 
-import lifelines
 from lifelines import utils
 
 from sklearn.preprocessing import StandardScaler
@@ -51,8 +50,8 @@ from matplotlib import pyplot as plt
 
 import h5py
 
-import logzero
-from logzero import logger
+# import logzero
+# from logzero import logger
 
 
 # %%

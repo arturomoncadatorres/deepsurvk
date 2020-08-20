@@ -29,10 +29,10 @@ def plot_km_recs_antirecs(T, E, recommendation_idx, fig=None, ax=None, xlim=None
     
     Parameters
     ----------
-    T:
-        
-    E:
-        
+    T: pandas DataFrame
+        It needs to have column 'T'
+    E: pandas DataFrame
+        It needs to have column 'E'
     recommendation_idx: boolean array
         Array as given by get_recs_antirecs_index. It is True for
         recommendation patients. 
