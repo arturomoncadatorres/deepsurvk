@@ -9,34 +9,42 @@ from pkg_resources import resource_filename
 def _load_dataset(filename, partition='complete', data_type='pandas', **kwargs):
     """
     Load an example dataset from deepsurvk.datasets.
-    All datasets correspond to the ones used originally in [1].
+    All datasets correspond to the ones used originally in [#katzman0]_.
     
     Parameters
     ----------
     filename: string
         Name of the dataset (e.g., 'whas.h5')
+        
     partition: string
-        Partition of the data to load. Possible values are:
-            'complete' - The whole dataset (default)
-            'training' or 'train' - Training partition as used in the original DeepSurv
-            'testing' or 'test' - Testing partition as used in the original DeepSurv
+        Partition of the data to load. 
+        
+        Possible values are:
+            * ``complete`` - The whole dataset (default)
+            * ``training`` or ``train`` - Training partition as used in the original DeepSurv
+            * ``testing`` or ``test`` - Testing partition as used in the original DeepSurv
+            
     data_type: string
-        Data type of the data. Possible values are:
-            'pandas' or 'pd' or 'dataframe' or 'df' - pandas DataFrame (default)
-            'numpy' or 'np' - NumPy array
-        Note that NumPy is supported as an option, but DeepSurvK is built
-        with pandas in mind.
+        Data type of the data. 
+        
+        Possible values are:
+            * ``pandas`` or ``pd`` or ``dataframe`` or ``df``- pandas DataFrame (default)
+            * ``numpy`` or ``np`` - NumPy array
+            
+        .. note:: 
+            NumPy is supported as an option, but DeepSurvK is built
+            with pandas in mind.
             
     Returns
     -------
-    X, Y, E: tuple of pandas DataFrames
-        X - Features
-        Y - Target variable
-        E - Event variable
+    tuple of pandas DataFrames        
+        * X - Features        
+        * Y - Target variable        
+        * E - Event variable
         
     References
     ----------
-    [1] Katzman, Jared L., et al. "DeepSurv: personalized treatment recommender system using a Cox proportional hazards deep neural network." BMC medical research methodology 18.1 (2018): 24.
+    .. [#katzman0] Katzman, Jared L., et al. "DeepSurv: personalized treatment recommender system using a Cox proportional hazards deep neural network." BMC medical research methodology 18.1 (2018): 24.
     """
     
     filename_ = resource_filename('deepsurvk', 'datasets/data/' + filename)
@@ -85,10 +93,30 @@ def _load_dataset(filename, partition='complete', data_type='pandas', **kwargs):
 
 #%%
 def _numpy_to_pandas(X, Y, E, filename):
+    """
+    Convert a data NumPy array to pandas DataFrame.
     
-    # Create pandas DataFrames
+    Parameters
+    ----------
+    X: NumPy array
+        Feature matrix
+    Y: NumPy array
+        Output array
+    E: NumPy array
+        Event array
+    filename: string
+        Name of the dataset (e.g., 'whas.h5')
+        
+    Returns
+    -------
+    tuple
+        Tuple with df_X, df_Y, and df_E
+    """    
+    # Get columns names and data types.
     column_names = _get_column_names(filename)
     data_types = _get_data_types(filename)
+    
+    # Create pandas DataFrames
     df_X = pd.DataFrame(data=X, columns=column_names)
     df_X = df_X.astype(data_types)
     
@@ -189,32 +217,39 @@ def load_metabric(partition='complete', **kwargs):
     have an observed death due to breast cancer with a median survival time 
     of 116 months. However, the file only contains data of 1904 patients.
     
-    For more information, see [1] as well as the accompanying README.
+    For more information, see [#curtis]_ as well as the accompanying README.
     
     Parameters
     ----------
     partition: string
-        Partition of the data to load. Possible values are:
-            'complete' - The whole dataset (default)
-            'training' or 'train' - Training partition as used in the original DeepSurv
-            'testing' or 'test' - Testing partition as used in the original DeepSurv
+        Partition of the data to load. 
+        
+        Possible values are:
+            * ``complete`` - The whole dataset (default)
+            * ``training`` or ``train`` - Training partition as used in the original DeepSurv
+            * ``testing`` or ``test`` - Testing partition as used in the original DeepSurv
+            
     data_type: string
-        Data type of the data. Possible values are:
-            'pandas' or 'pd' or 'dataframe' or 'df' - pandas DataFrame (default)
-            'numpy' or 'np' - NumPy array
-        Note that NumPy is supported as an option, but DeepSurvK is built
-        with pandas in mind.
+        Data type of the data. 
+        
+        Possible values are:
+            * ``pandas`` or ``pd`` or ``dataframe`` or ``df``- pandas DataFrame (default)
+            * ``numpy`` or ``np`` - NumPy array
+            
+        .. note:: 
+            NumPy is supported as an option, but DeepSurvK is built
+            with pandas in mind.
             
     Returns
     -------
-    X, Y, E: tuple of pandas DataFrames
-        X - Features
-        Y - Target variable
-        E - Event variable
+    tuple of pandas DataFrames        
+        * X - Features        
+        * Y - Target variable        
+        * E - Event variable
     
     References
     ----------
-    [1] Curtis, Christina, et al. "The genomic and transcriptomic architecture of 2,000 breast tumours reveals novel subgroups." Nature 486.7403 (2012): 346-352.
+    .. [#curtis] Curtis, Christina, et al. "The genomic and transcriptomic architecture of 2,000 breast tumours reveals novel subgroups." Nature 486.7403 (2012): 346-352.
     """
     return _load_dataset('metabric.h5', partition=partition, **kwargs)
 
@@ -222,43 +257,50 @@ def load_metabric(partition='complete', **kwargs):
 #%%
 def load_rgbsg(partition='complete', **kwargs):
     """
-    The training partition belongs to the Rotterdam tumor bank dataset [1].
+    The training partition belongs to the Rotterdam tumor bank dataset [#foekens]_.
     It contains records of 1546 patients with node-positive breast cancer.
     Nearly 90% of the patients have an observed death time. 
     
     The testing partitiong belongs to the German Breast Cancer Study
-    Group (GBSG) [2]. It contains records for 686 patients (of which 56 % are
+    Group (GBSG) [#schumacher]_. It contains records for 686 patients (of which 56 % are
     censored) in a randomized clinical trial that studied the effects of 
     chemotherapy and hormone treatment on survival rate.
     
-    For more information, see [1] and [2], as well as the accompanying README.
+    For more information, see [#foekens]_ and [#schumacher]_, as well as the accompanying README.
     
     Parameters
     ----------
     partition: string
-        Partition of the data to load. Possible values are:
-            'complete' - The whole dataset (default)
-            'training' or 'train' - Training partition as used in the original DeepSurv
-            'testing' or 'test' - Testing partition as used in the original DeepSurv
+        Partition of the data to load. 
+        
+        Possible values are:
+            * ``complete`` - The whole dataset (default)
+            * ``training`` or ``train`` - Training partition as used in the original DeepSurv
+            * ``testing`` or ``test`` - Testing partition as used in the original DeepSurv
+            
     data_type: string
-        Data type of the data. Possible values are:
-            'pandas' or 'pd' or 'dataframe' or 'df' - pandas DataFrame (default)
-            'numpy' or 'np' - NumPy array
-        Note that NumPy is supported as an option, but DeepSurvK is built
-        with pandas in mind.
+        Data type of the data. 
+        
+        Possible values are:
+            * ``pandas`` or ``pd`` or ``dataframe`` or ``df``- pandas DataFrame (default)
+            * ``numpy`` or ``np`` - NumPy array
+            
+        .. note:: 
+            NumPy is supported as an option, but DeepSurvK is built
+            with pandas in mind.
             
     Returns
     -------
-    X, Y, E: tuple of pandas DataFrames
-        X - Features
-        Y - Target variable
-        E - Event variable
+    tuple of pandas DataFrames        
+        * X - Features        
+        * Y - Target variable        
+        * E - Event variable
     
     References
     ----------
-    [1] Foekens, John A., et al. "The urokinase system of plasminogen activation and prognosis in 2780 breast cancer patients." Cancer research 60.3 (2000): 636-643.
+    .. [#foekens] Foekens, John A., et al. "The urokinase system of plasminogen activation and prognosis in 2780 breast cancer patients." Cancer research 60.3 (2000): 636-643.
 	
-    [2] Schumacher, M., et al. "Randomized 2 x 2 trial evaluating hormonal treatment and the duration of chemotherapy in node-positive breast cancer patients. German Breast Cancer Study Group." Journal of Clinical Oncology 12.10 (1994): 2086-2093.
+    .. [#schumacher] Schumacher, M., et al. "Randomized 2 x 2 trial evaluating hormonal treatment and the duration of chemotherapy in node-positive breast cancer patients. German Breast Cancer Study Group." Journal of Clinical Oncology 12.10 (1994): 2086-2093.
     """
     return _load_dataset('rgbsg.h5', partition=partition, **kwargs)
 
@@ -268,32 +310,39 @@ def load_simulated_gaussian(partition='complete', **kwargs):
     """
     Synthetic data with a Gaussian (non-linear) log-risk function.
     
-    For more information, see [1] as well as the accompanying README.
+    For more information, see [#katzman1]_ as well as the accompanying README.
     
     Parameters
     ----------
     partition: string
-        Partition of the data to load. Possible values are:
-            'complete' - The whole dataset (default)
-            'training' or 'train' - Training partition as used in the original DeepSurv
-            'testing' or 'test' - Testing partition as used in the original DeepSurv
+        Partition of the data to load. 
+        
+        Possible values are:
+            * ``complete`` - The whole dataset (default)
+            * ``training`` or ``train`` - Training partition as used in the original DeepSurv
+            * ``testing`` or ``test`` - Testing partition as used in the original DeepSurv
+            
     data_type: string
-        Data type of the data. Possible values are:
-            'pandas' or 'pd' or 'dataframe' or 'df' - pandas DataFrame (default)
-            'numpy' or 'np' - NumPy array
-        Note that NumPy is supported as an option, but DeepSurvK is built
-        with pandas in mind.
+        Data type of the data. 
+        
+        Possible values are:
+            * ``pandas`` or ``pd`` or ``dataframe`` or ``df``- pandas DataFrame (default)
+            * ``numpy`` or ``np`` - NumPy array
+            
+        .. note:: 
+            NumPy is supported as an option, but DeepSurvK is built
+            with pandas in mind.
             
     Returns
     -------
-    X, Y, E: tuple of pandas DataFrames
-        X - Features
-        Y - Target variable
-        E - Event variable
+    tuple of pandas DataFrames        
+        * X - Features        
+        * Y - Target variable        
+        * E - Event variable
         
     References
     ----------
-    [1] Katzman, Jared L., et al. "DeepSurv: personalized treatment recommender system using a Cox proportional hazards deep neural network." BMC medical research methodology 18.1 (2018): 24.
+    .. [#katzman1] Katzman, Jared L., et al. "DeepSurv: personalized treatment recommender system using a Cox proportional hazards deep neural network." BMC medical research methodology 18.1 (2018): 24.
     """
     return _load_dataset('simulated_gaussian.h5', partition=partition, **kwargs)
 
@@ -303,32 +352,39 @@ def load_simulated_linear(partition='complete', **kwargs):
     """
     Synthetic data with a linear log-risk function.
     
-    For more information, see [1] as well as the accompanying README.
+    For more information, see [#katzman2]_ as well as the accompanying README.
     
     Parameters
     ----------
     partition: string
-        Partition of the data to load. Possible values are:
-            'complete' - The whole dataset (default)
-            'training' or 'train' - Training partition as used in the original DeepSurv
-            'testing' or 'test' - Testing partition as used in the original DeepSurv
+        Partition of the data to load. 
+        
+        Possible values are:
+            * ``complete`` - The whole dataset (default)
+            * ``training`` or ``train`` - Training partition as used in the original DeepSurv
+            * ``testing`` or ``test`` - Testing partition as used in the original DeepSurv
+            
     data_type: string
-        Data type of the data. Possible values are:
-            'pandas' or 'pd' or 'dataframe' or 'df' - pandas DataFrame (default)
-            'numpy' or 'np' - NumPy array
-        Note that NumPy is supported as an option, but DeepSurvK is built
-        with pandas in mind.
+        Data type of the data. 
+        
+        Possible values are:
+            * ``pandas`` or ``pd`` or ``dataframe`` or ``df``- pandas DataFrame (default)
+            * ``numpy`` or ``np`` - NumPy array
+            
+        .. note:: 
+            NumPy is supported as an option, but DeepSurvK is built
+            with pandas in mind.
             
     Returns
     -------
-    X, Y, E: tuple of pandas DataFrames
-        X - Features
-        Y - Target variable
-        E - Event variable
+    tuple of pandas DataFrames        
+        * X - Features        
+        * Y - Target variable        
+        * E - Event variable
     
     References
     ----------
-    [1] Katzman, Jared L., et al. "DeepSurv: personalized treatment recommender system using a Cox proportional hazards deep neural network." BMC medical research methodology 18.1 (2018): 24.
+    .. [#katzman2] Katzman, Jared L., et al. "DeepSurv: personalized treatment recommender system using a Cox proportional hazards deep neural network." BMC medical research methodology 18.1 (2018): 24.
     """
     return _load_dataset('simulated_linear.h5', partition=partition, **kwargs)
 
@@ -339,32 +395,39 @@ def load_simulated_treatment(partition='complete', **kwargs):
     Synthetic data similar to the simulated_gaussian one, with an additional
     column representing treatment.
     
-    For more information, see [1] as well as the accompanying README.
+    For more information, see [#katzman3]_ as well as the accompanying README.
     
     Parameters
     ----------
     partition: string
-        Partition of the data to load. Possible values are:
-            'complete' - The whole dataset (default)
-            'training' or 'train' - Training partition as used in the original DeepSurv
-            'testing' or 'test' - Testing partition as used in the original DeepSurv
+        Partition of the data to load. 
+        
+        Possible values are:
+            * ``complete`` - The whole dataset (default)
+            * ``training`` or ``train`` - Training partition as used in the original DeepSurv
+            * ``testing`` or ``test`` - Testing partition as used in the original DeepSurv
+            
     data_type: string
-        Data type of the data. Possible values are:
-            'pandas' or 'pd' or 'dataframe' or 'df' - pandas DataFrame (default)
-            'numpy' or 'np' - NumPy array
-        Note that NumPy is supported as an option, but DeepSurvK is built
-        with pandas in mind.
+        Data type of the data. 
+        
+        Possible values are:
+            * ``pandas`` or ``pd`` or ``dataframe`` or ``df``- pandas DataFrame (default)
+            * ``numpy`` or ``np`` - NumPy array
+            
+        .. note:: 
+            NumPy is supported as an option, but DeepSurvK is built
+            with pandas in mind.
             
     Returns
     -------
-    X, Y, E: tuple of pandas DataFrames
-        X - Features
-        Y - Target variable
-        E - Event variable
+    tuple of pandas DataFrames        
+        * X - Features        
+        * Y - Target variable        
+        * E - Event variable
     
     References
     ----------
-    [1] Katzman, Jared L., et al. "DeepSurv: personalized treatment recommender system using a Cox proportional hazards deep neural network." BMC medical research methodology 18.1 (2018): 24.
+    .. [#katzman3] Katzman, Jared L., et al. "DeepSurv: personalized treatment recommender system using a Cox proportional hazards deep neural network." BMC medical research methodology 18.1 (2018): 24.
     """
     return _load_dataset('simulated_treatment.h5', partition=partition, **kwargs)
 
@@ -380,11 +443,39 @@ def load_support(partition='complete', **kwargs):
     However, patients with missing features were dropped, leaving a total
     of 8873 patients.
     
-    For more information, see [1] as well as the accompanying README.
+    For more information, see [#knaus]_ as well as the accompanying README.
+    
+    Parameters
+    ----------
+    partition: string
+        Partition of the data to load. 
+        
+        Possible values are:
+            * ``complete`` - The whole dataset (default)
+            * ``training`` or ``train`` - Training partition as used in the original DeepSurv
+            * ``testing`` or ``test`` - Testing partition as used in the original DeepSurv
+            
+    data_type: string
+        Data type of the data. 
+        
+        Possible values are:
+            * ``pandas`` or ``pd`` or ``dataframe`` or ``df``- pandas DataFrame (default)
+            * ``numpy`` or ``np`` - NumPy array
+            
+        .. note:: 
+            NumPy is supported as an option, but DeepSurvK is built
+            with pandas in mind.
+            
+    Returns
+    -------
+    tuple of pandas DataFrames        
+        * X - Features        
+        * Y - Target variable        
+        * E - Event variable
     
     References
     ----------
-    [1] Knaus, William A., et al. "The SUPPORT prognostic model: Objective estimates of survival for seriously ill hospitalized adults." Annals of internal medicine 122.3 (1995): 191-203.
+    .. [#knaus] Knaus, William A., et al. "The SUPPORT prognostic model: Objective estimates of survival for seriously ill hospitalized adults." Annals of internal medicine 122.3 (1995): 191-203.
     """
     return _load_dataset('support.h5', partition=partition, **kwargs)
 
@@ -400,31 +491,38 @@ def load_whas(partition='complete', **kwargs):
     body-mass-index (BMI), left heart failure complications (CHF), and order
     of MI (MIORD).
     
-    For more information, see [1] as well as the accompanying README.
+    For more information, see [#hosmer]_ as well as the accompanying README.
     
     Parameters
     ----------
     partition: string
-        Partition of the data to load. Possible values are:
-            'complete' - The whole dataset (default)
-            'training' or 'train' - Training partition as used in the original DeepSurv
-            'testing' or 'test' - Testing partition as used in the original DeepSurv
+        Partition of the data to load. 
+        
+        Possible values are:
+            * ``complete`` - The whole dataset (default)
+            * ``training`` or ``train`` - Training partition as used in the original DeepSurv
+            * ``testing`` or ``test`` - Testing partition as used in the original DeepSurv
+            
     data_type: string
-        Data type of the data. Possible values are:
-            'pandas' or 'pd' or 'dataframe' or 'df' - pandas DataFrame (default)
-            'numpy' or 'np' - NumPy array
-        Note that NumPy is supported as an option, but DeepSurvK is built
-        with pandas in mind.
+        Data type of the data. 
+        
+        Possible values are:
+            * ``pandas`` or ``pd`` or ``dataframe`` or ``df``- pandas DataFrame (default)
+            * ``numpy`` or ``np`` - NumPy array
+            
+        .. note:: 
+            NumPy is supported as an option, but DeepSurvK is built
+            with pandas in mind.
             
     Returns
     -------
-    X, Y, E: tuple of pandas DataFrames
-        X - Features
-        Y - Target variable
-        E - Event variable
+    tuple of pandas DataFrames        
+        * X - Features        
+        * Y - Target variable        
+        * E - Event variable
         
     References
     ----------
-    [1] Hosmer Jr, David W., Stanley Lemeshow, and Susanne May. Applied survival analysis: regression modeling of time-to-event data. Vol. 618. John Wiley & Sons, 2011.
+    .. [#hosmer] Hosmer Jr, David W., Stanley Lemeshow, and Susanne May. Applied survival analysis: regression modeling of time-to-event data. Vol. 618. John Wiley & Sons, 2011.
     """
     return _load_dataset('whas.h5', partition=partition, **kwargs)

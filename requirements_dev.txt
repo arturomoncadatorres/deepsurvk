@@ -8,5 +8,9 @@ coverage==5.2.1
 Sphinx==3.1.2
 twine==3.2.0
 
+tensorflow>=2.2.0
+pydot>=1.4.1
+graphviz>=2.38
+
 pytest==5.4.3
 pytest-runner==5.2

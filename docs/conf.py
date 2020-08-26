@@ -18,7 +18,7 @@ import sys
 # See https://github.com/readthedocs/readthedocs.org/issues/4210
 # and https://docs.readthedocs.io/en/latest/faq.html#i-get-import-errors-on-libraries-that-depend-on-c-modules
 autodoc_mock_imports = ['pandas', 'numpy', 'h5py'] # Possible modules include pandas, numpy, and h5py
-    
+
 # If extensions (or modules to document with autodoc) are in another
 # directory, add these directories to sys.path here. If the directory is
 # relative to the documentation root, use os.path.abspath to make it
@@ -176,6 +176,3 @@ texinfo_documents = [
      'Implementation of DeepSurv using Keras.',
      'Miscellaneous'),
 ]
-
-
-
