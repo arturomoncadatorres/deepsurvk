@@ -113,7 +113,7 @@ def get_recs_antirecs_index(rec_ij, X, treatment_column):
     # Get groups of patients that were and were not treated according to the 
     # model's recommended treatment. Following the paper's nomenclature, 
     # these will be recommendation and antirecommendation, respectively.
-    real_treatment = X['horm_treatment'].values
+    real_treatment = X[treatment_column].values
     
     recommendation_idx = np.logical_and(recommended_treatment.reshape((-1,)), real_treatment.reshape((-1,)))
     antirecommendation_idx = ~recommendation_idx
