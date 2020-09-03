@@ -2,8 +2,9 @@
 
 """The setup script."""
 
-from setuptools import setup, find_packages
+import setuptools
 
+# For a complete description of versioning, see https://www.python.org/dev/peps/pep-0440/
 exec(compile(open("deepsurvk/version.py").read(), "deepsurvk/version.py", "exec"))
 
 with open("README.md") as f:
@@ -12,26 +13,29 @@ with open("README.md") as f:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = ['pygments>=2.5.1', 
-                'h5py>=2.10.0']
+with open("requirements/base_requirements.txt") as f:
+    REQUIREMENTS = f.read().splitlines()
 
 setup_requirements = ['pytest-runner', 'pandas>=1.0.0']
 
 test_requirements = ['pytest>=3', ]
 
-setup(
+setuptools.setup(
     author="Arturo Moncada-Torres",
     author_email='arturomoncadatorres@gmail.com',
     python_requires='>=3.6',
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
+		'Intended Audience :: Healthcare Industry',
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
+		'Topic :: Scientific/Engineering :: Artificial Intelligence',
+		'Topic :: Scientific/Engineering :: Medical Science Apps.',
     ],
     description="Implementation of DeepSurv using Keras",
     entry_points={
@@ -39,14 +43,14 @@ setup(
             'deepsurvk=deepsurvk.cli:main',
         ],
     },
-    install_requires=requirements,
+    install_requires=REQUIREMENTS,
     license="MIT license",
     long_description=LONG_DESCRIPTION,
     long_description_content_type=LONG_DESC_TYPE,
     include_package_data=True,
     keywords='deepsurvk',
     name='deepsurvk',
-    packages=find_packages(include=['deepsurvk', 'deepsurvk.*']),
+    packages=setuptools.find_packages(include=['deepsurvk', 'deepsurvk.*']),
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
