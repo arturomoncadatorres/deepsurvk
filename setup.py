@@ -14,7 +14,7 @@ with open("README.md") as f:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-with open("./requirements/base_requirements.txt") as f:
+with open("requirements/base_requirements.txt") as f:
     REQUIREMENTS = f.read().splitlines()
 
 setup_requirements = ['pytest-runner', 'pandas>=1.0.0']
