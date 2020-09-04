@@ -6,7 +6,7 @@ import setuptools
 
 # For a complete description of versioning, see https://www.python.org/dev/peps/pep-0440/
 # exec(compile(open("deepsurvk/version.py").read(), "deepsurvk/version.py", "exec"))
-__version__ = 'version='0.1.1''
+#__version__ = 'version='0.1.1''
 
 with open("README.md") as f:
     LONG_DESCRIPTION, LONG_DESC_TYPE = f.read(), "text/markdown"
@@ -56,6 +56,6 @@ setuptools.setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/arturomoncadatorres/deepsurvk',
-    version=__version__,
+    version='0.1.0',
     zip_safe=False,
 )
