@@ -5,7 +5,8 @@
 import setuptools
 
 # For a complete description of versioning, see https://www.python.org/dev/peps/pep-0440/
-exec(compile(open("deepsurvk/version.py").read(), "deepsurvk/version.py", "exec"))
+# exec(compile(open("deepsurvk/version.py").read(), "deepsurvk/version.py", "exec"))
+__version__ = 0.1.0
 
 with open("README.md") as f:
     LONG_DESCRIPTION, LONG_DESC_TYPE = f.read(), "text/markdown"
