@@ -4,10 +4,6 @@
 
 import setuptools
 
-# For a complete description of versioning, see https://www.python.org/dev/peps/pep-0440/
-# exec(compile(open("deepsurvk/version.py").read(), "deepsurvk/version.py", "exec"))
-#__version__ = 'version='0.1.2''
-
 with open("README.md") as f:
     LONG_DESCRIPTION, LONG_DESC_TYPE = f.read(), "text/markdown"
 
@@ -24,7 +20,7 @@ test_requirements = ['pytest>=3', ]
 setuptools.setup(
     author="Arturo Moncada-Torres",
     author_email='arturomoncadatorres@gmail.com',
-    python_requires='>=3.6',
+    python_requires='>=3.7',
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
@@ -32,7 +28,6 @@ setuptools.setup(
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
 		'Topic :: Scientific/Engineering :: Artificial Intelligence',
@@ -56,6 +51,6 @@ setuptools.setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/arturomoncadatorres/deepsurvk',
-    version='0.1.2',
+    version='0.1.2', # For a complete description of versioning, see https://www.python.org/dev/peps/pep-0440/
     zip_safe=False,
 )
