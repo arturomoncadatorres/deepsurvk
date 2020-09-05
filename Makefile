@@ -1,6 +1,9 @@
 .PHONY: clean clean-test clean-pyc clean-build docs help
 .DEFAULT_GOAL := help
 
+#$(info $(SHELL))
+#$(info $(PATH))
+
 define BROWSER_PYSCRIPT
 import os, webbrowser, sys
 
