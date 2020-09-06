@@ -51,6 +51,6 @@ setuptools.setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/arturomoncadatorres/deepsurvk',
-    version='0.1.3', # For a complete description of versioning, see https://www.python.org/dev/peps/pep-0440/
+    version='0.1.0', # For a complete description of versioning, see https://www.python.org/dev/peps/pep-0440/
     zip_safe=False,
 )
