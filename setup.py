@@ -46,7 +46,7 @@ setuptools.setup(
     include_package_data=True,
     keywords='deepsurvk',
     name='deepsurvk',
-    packages=setuptools.find_packages(include=['deepsurvk', 'deepsurvk.*']),
+    packages=setuptools.find_namespace_packages(include=['deepsurvk', 'deepsurvk.*'], exclude=["*.tests", "*.tests.*"]),
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
