@@ -1,4 +1,5 @@
 tensorflow>=2.2.0
+numpy==1.18.0
 pydot>=1.4.1
 graphviz>=0.14.1
 lifelines>=0.24.15
