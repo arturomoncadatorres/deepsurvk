@@ -12,7 +12,7 @@ from tensorflow.keras.regularizers import l2
 # import logzero
 # from logzero import logger
 
-__all__ = ['DeepSurvK', 'negative_log_likelihood', 'common_callbacks']
+__all__ = ['DeepSurvK', 'DeepSurvK_kt', 'negative_log_likelihood', 'common_callbacks']
 
 
 #%%
@@ -28,7 +28,7 @@ def DeepSurvK(n_features,
               optimizer='nadam'):
     """
     Create a Keras model using the DeepSurv architecture, as originally
-    proposed in [1].
+    proposed in [1]. This implementation uses a set of defined parameters.
     
     Parameters
     ----------
@@ -112,8 +112,105 @@ def DeepSurvK(n_features,
     # Since the loss function is data-dependent, for now we will
     # only use a string as a place holder. Once the model is fit
     # (and the data are available), the proper loss fuction will be defined.
-    # model.compile(loss=_negative_log_likelihood(E_train), optimizer=optimizer_)
     model.compile(loss='negative_log_likelihood', optimizer=optimizer_)
+    
+    return model
+
+
+#%%
+def DeepSurvK_kt(hp):
+    """
+    Create a Keras model using the DeepSurv architecture, as originally
+    proposed in [1]. This implementation uses (hyper)parameters as optimized
+    by Keras Tuner [2].
+    
+    Parameters
+    ----------
+    hp: instance of hyperparameters class
+        From where hyperparameters will be sampled.
+            
+    Returns
+    -------
+    model: Keras sequential model
+        
+    References
+    ----------
+    [1] Katzman, Jared L., et al. "DeepSurv: personalized treatment recommender system using a Cox proportional hazards deep neural network." BMC medical research methodology 18.1 (2018): 24.
+    [2] https://keras-team.github.io/keras-tuner/
+    """
+    
+    # Construct the (sequential) model.
+    model = Sequential()
+    
+    # model.add(Dense(units=hp['n_features'], activation=hp.Choice('activation_input', ['relu', 'selu']), kernel_initializer='glorot_uniform', input_shape=(hp['n_features'],), name='InputLayer'))
+    model.add(Dense(units=7, activation=hp.Choice('activation_input', ['relu', 'selu']), kernel_initializer='glorot_uniform', input_shape=(7,), name='InputLayer'))
+    model.add(Dropout(rate=hp.Float('dropout_input', min_value=0.0, max_value=0.75, step=0.05), name='DroputInput'))
+    
+    
+    # for i in range(hp.Int('num_layers', 2, 20)):
+    #     model.add(layers.Dense(units=hp.Int('units_' + str(i),
+    #                                         min_value=32,
+    #                                         max_value=512,
+    #                                         step=32),
+    #                            activation='relu'))
+    # model.add(layers.Dense(10, activation='softmax'))
+    # model.compile(
+    #     optimizer=keras.optimizers.Adam(
+    #         hp.Choice('learning_rate', [1e-2, 1e-3, 1e-4])),
+    #     loss='sparse_categorical_crossentropy',
+    #     metrics=['accuracy'])
+    # return model
+
+
+    # ###########
+    # # Validate inputs.
+    # if activation not in ['relu', 'selu']:
+    #     raise ValueError(f"{activation} is not a valid activation function.")
+        
+    # if optimizer not in ['nadam', 'sgd']:
+    #     raise ValueError(f"{optimizer} is not a valid optimizer.")
+        
+        
+    # # Construct the (sequential) model.
+    # model = Sequential()
+    
+    # # Input layer.
+    # model.add(Dense(units=n_features, activation=activation, kernel_initializer='glorot_uniform', input_shape=(n_features,), name='InputLayer'))
+    # model.add(Dropout(dropout, name='DroputInput'))
+    
+    
+    n_layers=2
+    n_nodes=25
+    activation='relu'
+    learning_rate=0.01
+    decay=1e-4
+    momentum=0.5
+    l2_reg=15
+    dropout=0.1
+    optimizer='nadam'
+    
+    # Hidden layers are identical between them. 
+    # Therefore, we will create them in a loop.
+    for n_layer in range(n_layers):
+        model.add(Dense(units=n_nodes, activation=activation, kernel_initializer='glorot_uniform', name=f'HiddenLayer{n_layer+1}'))
+        model.add(Dropout(dropout, name=f'Dropout{n_layer+1}'))
+        
+    # Output layer.
+    model.add(Dense(units=1, activation='linear', kernel_initializer='glorot_uniform', kernel_regularizer=l2(l2_reg), name='OutputLayer'))
+    model.add(ActivityRegularization(l2=l2_reg, name='ActivityRegularization'))
+    
+    # Define the optimizer
+    if optimizer == 'nadam':
+        optimizer_ = Nadam(learning_rate=learning_rate, decay=decay)
+    elif optimizer == 'sgd':
+        optimizer_ = SGD(learning_rate=learning_rate, momentum=momentum, nesterov=True)
+    
+    # Compile the model.
+    # Since the loss function is data-dependent, for now we will
+    # only use a string as a place holder. Once the model is fit
+    # (and the data are available), the proper loss fuction will be defined.
+    #model.compile(loss='negative_log_likelihood', optimizer=optimizer_)
+    model.compile(loss='mean_squared_error', optimizer=optimizer_)
     
     return model
 
