@@ -164,7 +164,7 @@ rec_ij = deepsurvk.recommender_function(model, X_test, 'horm_treatment')
 # recommendation indicates that treatment $i$ is more effective and leads to 
 # a lower risk of death than treatment $j$, and we recommend treatment $i$.
 #
-# DeepSurv also has a function to find this subsets of patients 
+# DeepSurv also has a function to find these subsets of patients 
 # (recommendation and anti-recommendation):
 
 #%%
