@@ -1,5 +1,4 @@
-tensorflow==2.2.0
-keras-tuner==1.0.1
+tensorflow>=2.2.0
 numpy==1.18.0
 scipy==1.4.1
 pydot>=1.4.1

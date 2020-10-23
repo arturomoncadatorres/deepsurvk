@@ -251,7 +251,7 @@ callbacks = [tf.keras.callbacks.TerminateOnNaN(),
 
 # %% [markdown]
 # ## Model fitting
-# Now we can fit the DeepSurv model! Notice how we use the whole set of 
+# Now we can fit the DeepSurv model. Notice how we use the whole set of 
 # patients in a batch. Furthermore, be sure that `shuffle` is set to `False`, 
 # since order is important in predicting ranked survival.
 

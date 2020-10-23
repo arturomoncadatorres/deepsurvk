@@ -105,10 +105,14 @@ E_train = E_train[sort_idx]
 # %% [markdown]
 # ## Create a DeepSurvK model
 # When creating an instance of a DeepSurvK model, we can also define its 
-# parameters. The only mandatory parameter is `n_features`.
+# parameters. The only mandatory parameters are `n_features` and `E`.
+# If not defined, the rest of the parameters will use a default.
+# This is, of course, far from optimal, since (hyper)parameter tuning
+# has a *huge* impact on model performance. However, we will deal
+# with that later.
 
 # %%
-dsk = deepsurvk.DeepSurvK(n_features=n_features)
+dsk = deepsurvk.DeepSurvK(n_features=n_features, E=E_train)
 
 # %% [markdown]
 # Since DeepSurvK is just a Keras model, we can take advantage of all the
@@ -123,29 +127,6 @@ dsk.summary()
 
 # %%
 tf.keras.utils.plot_model(dsk, show_shapes=True)
-
-# %% [markdown]
-# ## Define explicitely the (custom) loss function
-# DeepSurv (and therefore DeepSurvK) uses a custom loss function.
-# Namely, it aims to minimize the negative log-likelihood.
-# During the creation of the model, the loss function is defined as a string,
-# which is meant to serve as a place holder.
-
-# %%
-dsk.loss
-
-# %% [markdown]
-# This is because the loss function depends on three parameters:
-# `y_true`, `y_pred`, *and* `E`. Unfortunately, custom loss functions in Keras
-# [need to have their signature (i.e., prototype) as](https://keras.io/api/losses/#creating-custom-losses)
-# `loss_fn(y_true, y_pred)`. Therefore, we need to explicitely define it
-# into the model in a separate step. Fortunately, DeepSurvK makes this very
-# easy by providing the loss function directly. After this, we can just
-# add it to the model by compiling it.
-
-# %%
-loss = deepsurvk.negative_log_likelihood(E_train)
-dsk.compile(loss=loss)
 
 # %% [markdown]
 # ## Callbacks
@@ -181,7 +162,7 @@ history = dsk.fit(X_train, Y_train,
 # often required fast and easy.
 
 # %%
-deepsurv.plot_loss(history)
+deepsurvk.plot_loss(history)
 
 # %% [markdown]
 # ## Model predictions
@@ -196,6 +177,3 @@ print(f"c-index of training dataset = {c_index_train}")
 Y_pred_test = np.exp(-dsk.predict(X_test))
 c_index_test = deepsurvk.concordance_index(Y_test, Y_pred_test, E_test)
 print(f"c-index of testing dataset = {c_index_test}")
-
-# %%
-# TODO: Optimize parameters using Talos...? https://github.com/autonomio/talos

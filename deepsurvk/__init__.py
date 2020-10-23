@@ -3,7 +3,8 @@
 
 import deepsurvk.network.deepsurvk
 
-from deepsurvk.network.deepsurvk import DeepSurvK, DeepSurvK_kt, negative_log_likelihood, common_callbacks
+from deepsurvk.network.deepsurvk import DeepSurvK, negative_log_likelihood, common_callbacks
+# from deepsurvk.network.optimization import optimize_hp
 from deepsurvk.applications.recommender import recommender_function, get_recs_antirecs_index
 from deepsurvk.utils.concordance import concordance_index, concordance_index_objective
 from deepsurvk.visualization.dsk_metrics import plot_loss
@@ -16,9 +17,9 @@ __version__ = '0.1.2'
 
 __all__ = ['__version__',
            'DeepSurvK',
-           'DeepSurvK_kt',
            'negative_log_likelihood',
            'common_callbacks',
+           # 'optimize_hp',
            'recommender_function',
            'get_recs_antirecs_index',
            'concordance_index',

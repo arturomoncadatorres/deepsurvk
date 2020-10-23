@@ -6,69 +6,66 @@ Defines the actual DeepSurvK network.
 import tensorflow as tf
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, ActivityRegularization
-from tensorflow.keras.optimizers import SGD, Nadam, RMSprop
+from tensorflow.keras.optimizers import SGD, Nadam
 from tensorflow.keras.regularizers import l2
 
 # import logzero
 # from logzero import logger
 
-__all__ = ['DeepSurvK', 'DeepSurvK_kt', 'negative_log_likelihood', 'common_callbacks']
+__all__ = ['DeepSurvK', 'negative_log_likelihood', 'common_callbacks']
 
 
 #%%
-def DeepSurvK(n_features,
-              n_layers=2, 
-              n_nodes=25, 
-              activation='relu', 
-              learning_rate=0.01,
-              decay=1e-4,
-              momentum=0.5,
-              l2_reg=15,
-              dropout=0.1,
-              optimizer='nadam'):
+def DeepSurvK(n_features=None,
+              E=None,
+              **params):
+
     """
     Create a Keras model using the DeepSurv architecture, as originally
-    proposed in [1]. This implementation uses a set of defined parameters.
+    proposed in [1].
     
     Parameters
     ----------
     n_features: int
         Number of features used by the network.
-    n_layers: int
-        Number of hidden layers.
-        Default is 2.
-    n_nodes: int
-        Number of nodes of each hidden layer.
-        Default is 25.
-    activation: string
-        Activation function of the input and the hidden layers.
-        Possible values are:
-            'relu'  Rectified Linear Unit (default)
-            'selu'  Scaled exponential linear unit
-    learning_rate: float
-        Learning rate.
-        Default is 0.01.
-    decay: float
-        Learning rate decay.
-        Default is 1e-4
-    momentum: float
-        Momentum
-        Default is 0.5
-    l2_reg: float
-        L2 regularization
-        Default is 15
-    droput: float
-        Dropout propotion
-        Default is 0.1
-    optimizer: string
-        Model optimizer
-        Possible values are:
-            'nadam' Nadam (Adam + Nesterov momentum, default) [2]
-            'sgd`   Stochastic gradient descent [3]
+    E:
+    params: dictionary
+        Parameters are defined as the dictionary keys. These are:
+            n_layers: int
+                Number of hidden layers.
+                Default is 2.
+            n_nodes: int
+                Number of nodes of each hidden layer.
+                Default is 25.
+            activation: string
+                Activation function of the input and the hidden layers.
+                Possible values are:
+                    'relu'  Rectified Linear Unit (default)
+                    'selu'  Scaled exponential linear unit
+            learning_rate: float
+                Learning rate.
+                Default is 0.01.
+            decay: float
+                Learning rate decay.
+                Default is 1e-4
+            momentum: float
+                Momentum
+                Default is 0.5
+            l2_reg: float
+                L2 regularization
+                Default is 15
+            droput: float
+                Dropout propotion
+                Default is 0.1
+            optimizer: string
+                Model optimizer
+                Possible values are:
+                    'nadam' Nadam (Adam + Nesterov momentum, default) [2]
+                    'sgd`   Stochastic gradient descent [3]
             
     Returns
     -------
-        model: Keras sequential model
+    model: Keras sequential model
         
     References
     ----------
@@ -77,7 +74,61 @@ def DeepSurvK(n_features,
     [3] https://www.tensorflow.org/api_docs/python/tf/keras/optimizers/SGD
     """
     
+    # Empty parameter dictionary into variables for easier use.
+    # At the same time, define defaults.
+    if 'n_layers' in params:
+        n_layers = params['n_layers']
+    else:
+        n_layers=2
+        
+    if 'n_nodes' in params:
+        n_nodes = params['n_nodes']
+    else:
+        n_nodes=25
+        
+    if 'activation' in params:
+        activation = params['activation']
+    else:
+        activation='relu'
+        
+    if 'learning_rate' in params:
+        learning_rate = params['learning_rate']
+    else:
+        learning_rate=0.01
+        
+    if 'decay' in params:
+        decay = params['decay']
+    else:
+        decay=1e-4
+        
+    if 'momentum' in params:
+        momentum = params['momentum']
+    else:
+        momentum=0.5
+        
+    if 'l2_reg' in params:
+        l2_reg = params['l2_reg']
+    else:
+        l2_reg=15
+        
+    if 'dropout' in params:
+        dropout = params['dropout']
+    else:
+        dropout=0.1
+        
+    if 'optimizer' in params:
+        optimizer = params['optimizer']
+    else:
+        optimizer='nadam'
+    
+    
     # Validate inputs.
+    if n_features is None:
+        raise ValueError(f"n_features is required input.")
+    
+    if E is None:
+        raise ValueError(f"E is a required input.")
+        
     if activation not in ['relu', 'selu']:
         raise ValueError(f"{activation} is not a valid activation function.")
         
@@ -108,109 +159,11 @@ def DeepSurvK(n_features,
     elif optimizer == 'sgd':
         optimizer_ = SGD(learning_rate=learning_rate, momentum=momentum, nesterov=True)
     
-    # Compile the model.
-    # Since the loss function is data-dependent, for now we will
-    # only use a string as a place holder. Once the model is fit
-    # (and the data are available), the proper loss fuction will be defined.
-    model.compile(loss='negative_log_likelihood', optimizer=optimizer_)
-    
-    return model
-
-
-#%%
-def DeepSurvK_kt(hp):
-    """
-    Create a Keras model using the DeepSurv architecture, as originally
-    proposed in [1]. This implementation uses (hyper)parameters as optimized
-    by Keras Tuner [2].
-    
-    Parameters
-    ----------
-    hp: instance of hyperparameters class
-        From where hyperparameters will be sampled.
-            
-    Returns
-    -------
-    model: Keras sequential model
-        
-    References
-    ----------
-    [1] Katzman, Jared L., et al. "DeepSurv: personalized treatment recommender system using a Cox proportional hazards deep neural network." BMC medical research methodology 18.1 (2018): 24.
-    [2] https://keras-team.github.io/keras-tuner/
-    """
-    
-    # Construct the (sequential) model.
-    model = Sequential()
-    
-    # model.add(Dense(units=hp['n_features'], activation=hp.Choice('activation_input', ['relu', 'selu']), kernel_initializer='glorot_uniform', input_shape=(hp['n_features'],), name='InputLayer'))
-    model.add(Dense(units=7, activation=hp.Choice('activation_input', ['relu', 'selu']), kernel_initializer='glorot_uniform', input_shape=(7,), name='InputLayer'))
-    model.add(Dropout(rate=hp.Float('dropout_input', min_value=0.0, max_value=0.75, step=0.05), name='DroputInput'))
-    
-    
-    # for i in range(hp.Int('num_layers', 2, 20)):
-    #     model.add(layers.Dense(units=hp.Int('units_' + str(i),
-    #                                         min_value=32,
-    #                                         max_value=512,
-    #                                         step=32),
-    #                            activation='relu'))
-    # model.add(layers.Dense(10, activation='softmax'))
-    # model.compile(
-    #     optimizer=keras.optimizers.Adam(
-    #         hp.Choice('learning_rate', [1e-2, 1e-3, 1e-4])),
-    #     loss='sparse_categorical_crossentropy',
-    #     metrics=['accuracy'])
-    # return model
-
-
-    # ###########
-    # # Validate inputs.
-    # if activation not in ['relu', 'selu']:
-    #     raise ValueError(f"{activation} is not a valid activation function.")
-        
-    # if optimizer not in ['nadam', 'sgd']:
-    #     raise ValueError(f"{optimizer} is not a valid optimizer.")
-        
-        
-    # # Construct the (sequential) model.
-    # model = Sequential()
-    
-    # # Input layer.
-    # model.add(Dense(units=n_features, activation=activation, kernel_initializer='glorot_uniform', input_shape=(n_features,), name='InputLayer'))
-    # model.add(Dropout(dropout, name='DroputInput'))
-    
-    
-    n_layers=2
-    n_nodes=25
-    activation='relu'
-    learning_rate=0.01
-    decay=1e-4
-    momentum=0.5
-    l2_reg=15
-    dropout=0.1
-    optimizer='nadam'
-    
-    # Hidden layers are identical between them. 
-    # Therefore, we will create them in a loop.
-    for n_layer in range(n_layers):
-        model.add(Dense(units=n_nodes, activation=activation, kernel_initializer='glorot_uniform', name=f'HiddenLayer{n_layer+1}'))
-        model.add(Dropout(dropout, name=f'Dropout{n_layer+1}'))
-        
-    # Output layer.
-    model.add(Dense(units=1, activation='linear', kernel_initializer='glorot_uniform', kernel_regularizer=l2(l2_reg), name='OutputLayer'))
-    model.add(ActivityRegularization(l2=l2_reg, name='ActivityRegularization'))
-    
-    # Define the optimizer
-    if optimizer == 'nadam':
-        optimizer_ = Nadam(learning_rate=learning_rate, decay=decay)
-    elif optimizer == 'sgd':
-        optimizer_ = SGD(learning_rate=learning_rate, momentum=momentum, nesterov=True)
+    # Define the loss.
+    loss_ = negative_log_likelihood(E)
     
     # Compile the model.
-    # Since the loss function is data-dependent, for now we will
-    # only use a string as a place holder. Once the model is fit
-    # (and the data are available), the proper loss fuction will be defined.
-    #model.compile(loss='negative_log_likelihood', optimizer=optimizer_)
-    model.compile(loss='mean_squared_error', optimizer=optimizer_)
+    model.compile(loss=loss_, optimizer=optimizer_, metrics='categorical_accuracy')        
     
     return model
 

@@ -94,16 +94,20 @@ E_train = E_train.loc[sort_idx, :]
 # as reported in Table 1.
 
 # %%
+params = {'n_layers':1,
+          'n_nodes':8,
+          'activation':'selu',
+          'learning_rate':0.154,
+          'decays':5.667e-3,
+          'momentum':0.887,
+          'l2_reg':6.551,
+          'dropout':0.661,
+          'optimizer':'nadam'}
+
+#%%
 dsk = deepsurvk.DeepSurvK(n_features=n_features, 
-                          n_layers=1,
-                          n_nodes=8, 
-                          activation='selu', 
-                          learning_rate=0.154,
-                          decay=5.667e-3,
-                          momentum=0.887,
-                          l2_reg=6.551,
-                          dropout=0.661,
-                          optimizer='nadam')
+                          E=E_train,
+                          **params)
 
 #%%
 loss = deepsurvk.negative_log_likelihood(E_train)
@@ -152,7 +156,7 @@ print(f"c-index of testing dataset = {c_index_test}")
 # allows calculating $rec_{ij}(x)$ in a very easy way:
     
 #%%
-rec_ij = deepsurvk.recommender_function(model, X_test, 'horm_treatment')
+rec_ij = deepsurvk.recommender_function(dsk, X_test, 'horm_treatment')
 
 #%% [markdown]
 # > The recommender function can be used to provide personalized treatment 
