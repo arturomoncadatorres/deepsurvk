@@ -1,5 +1,5 @@
 tensorflow>=2.2.0
-numpy==1.18.0
+numpy==1.19.4
 scipy==1.4.1
 pydot>=1.4.1
 graphviz>=0.14.1
