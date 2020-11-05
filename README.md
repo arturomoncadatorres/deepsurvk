@@ -2,7 +2,7 @@
 # DeepSurvK
 ######  Implementation of DeepSurv using Keras
 
-[![PyPI](https://img.shields.io/pypi/v/deepsurvk.svg)](https://pypi.python.org/pypi/deepsurvk)
+[![PyPI version](https://badge.fury.io/py/deepsurvk.svg)](https://badge.fury.io/py/deepsurvk)
 [![Build Status](https://img.shields.io/travis/arturomoncadatorres/deepsurvk.svg?branch=master)](https://travis-ci.org/arturomoncadatorres/deepsurvk)
 [![Documentation](https://readthedocs.org/projects/deepsurvk/badge/?version=latest)](https://deepsurvk.readthedocs.io/en/latest/?badge=latest)
 [![PyUp](https://pyup.io/repos/github/arturomoncadatorres/deepsurvk/shield.svg)](https://pyup.io/repos/github/arturomoncadatorres/deepsurvk/)
