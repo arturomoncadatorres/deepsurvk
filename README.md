@@ -24,6 +24,7 @@ You can find the complete package's documentation [here](https://deepsurvk.readt
 * Designed with data as pandas DataFrames in mind
 * Visualization tools for the most common plots for fast and easy exploration and prototyping
 * Treatment recommender
+* (Basic) parameter optimization using grid search
 
 ## :page_with_curl: License
 This package uses the MIT license
