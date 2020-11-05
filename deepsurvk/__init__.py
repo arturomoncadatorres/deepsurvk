@@ -12,7 +12,7 @@ from deepsurvk.visualization.survival import plot_km_recs_antirecs
 
 from deepsurvk.version import __version__
 
-__version__ = '0.1.2'
+__version__ = '0.2.0'
 
 
 __all__ = ['__version__',
