@@ -149,7 +149,7 @@ print(callbacks)
 # After this, we are ready to actually fit our model (as any Keras model).
 
 # %%
-epochs = 500
+epochs = 1000
 history = dsk.fit(X_train, Y_train, 
                   batch_size=n_patients_train,
                   epochs=epochs, 

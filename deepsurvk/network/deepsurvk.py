@@ -163,7 +163,7 @@ def DeepSurvK(n_features=None,
     loss_ = negative_log_likelihood(E)
     
     # Compile the model.
-    model.compile(loss=loss_, optimizer=optimizer_, metrics='categorical_accuracy')        
+    model.compile(loss=loss_, optimizer=optimizer_)        
     
     return model
 

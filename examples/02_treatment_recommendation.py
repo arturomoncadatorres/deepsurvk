@@ -116,7 +116,7 @@ dsk.compile(loss=loss)
 #%%
 callbacks = deepsurvk.common_callbacks()
 
-epochs = 500
+epochs = 1000
 history = dsk.fit(X_train, Y_train, 
                   batch_size=n_patients_train,
                   epochs=epochs, 
