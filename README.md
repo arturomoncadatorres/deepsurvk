@@ -1,12 +1,17 @@
+<p align="center">
+  <img src="https://github.com/arturomoncadatorres/deepsurvk/blob/master/docs/artwork/logo.png?raw=true" width="500" />
+</p>
 
-# DeepSurvK
-######  Implementation of DeepSurv using Keras
+<h3 align=center> Implementation of DeepSurv using Keras</h3>
 
+<h3 align="center">
 [![PyPI version](https://badge.fury.io/py/deepsurvk.svg)](https://badge.fury.io/py/deepsurvk)
 [![Build Status](https://img.shields.io/travis/arturomoncadatorres/deepsurvk.svg?branch=master)](https://travis-ci.org/arturomoncadatorres/deepsurvk)
 [![Documentation](https://readthedocs.org/projects/deepsurvk/badge/?version=latest)](https://deepsurvk.readthedocs.io/en/latest/?badge=latest)
 [![PyUp](https://pyup.io/repos/github/arturomoncadatorres/deepsurvk/shield.svg)](https://pyup.io/repos/github/arturomoncadatorres/deepsurvk/)
+</h3>
 
+---
 DeepSurv is a Cox Proportional Hazards deep neural network used for modeling interactions between a patient's covariates and treatment effectiveness. It was originally proposed by [Katzman et. al (2018)](https://bmcmedresmethodol.biomedcentral.com/articles/10.1186/s12874-018-0482-1) and [implemented in Theano (using Lasagne)](https://github.com/jaredleekatzman/DeepSurv).
 
 Unfortunately, [Theano is no longer supported](https://groups.google.com/forum/#!msg/theano-users/7Poq8BZutbY/rNCIfvAEAwAJ). There have been some attempts in recreating DeepSurv in other DL platforms, such as [czifan's `DeepSurv.pytorch`](https://github.com/czifan/DeepSurv.pytorch). However, given its popularity and ease of use, I think TensorFlow 2's Keras is a great option for this task.
