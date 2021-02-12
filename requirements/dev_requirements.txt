@@ -14,4 +14,4 @@ coverage==5.2.1
 twine==3.2.0
 
 pytest==5.4.3
-pytest-runner==5.2
+pytest-runner==5.3.0
