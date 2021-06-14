@@ -104,5 +104,6 @@ ENV/
 # IDE settings
 .vscode/
 
-# Generated example models
+# Generated example/test models
 examples/models/
+*/_temp.h5
