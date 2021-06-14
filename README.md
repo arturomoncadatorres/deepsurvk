@@ -1,11 +1,29 @@
+<p align="center">
+  <img src="https://github.com/arturomoncadatorres/deepsurvk/blob/master/docs/artwork/logo.png?raw=true" width="500" />
+</p>
 
-# DeepSurvK
-######  Implementation of DeepSurv using Keras
+<h3 align=center> Implementation of DeepSurv using Keras</h3>
 
+<h3 align="center">
+    
 [![PyPI version](https://badge.fury.io/py/deepsurvk.svg)](https://badge.fury.io/py/deepsurvk)
 [![Build Status](https://img.shields.io/travis/arturomoncadatorres/deepsurvk.svg?branch=master)](https://travis-ci.org/arturomoncadatorres/deepsurvk)
 [![Documentation](https://readthedocs.org/projects/deepsurvk/badge/?version=latest)](https://deepsurvk.readthedocs.io/en/latest/?badge=latest)
 [![PyUp](https://pyup.io/repos/github/arturomoncadatorres/deepsurvk/shield.svg)](https://pyup.io/repos/github/arturomoncadatorres/deepsurvk/)
+
+</h3>
+
+<p align="center">
+  <a href="#pray-motivation">Motivation</a> •
+  <a href="#tada-features">Features</a> •
+  <a href="#bookmark_tabs-documentation">Documentation</a> •
+  <a href="#page_with_curl-license">License</a> •
+  <a href="#black_nib-references">References</a> •
+  <a href="#label-credits">Credits</a>
+</p>
+
+---
+## :pray: Motivation
 
 DeepSurv is a Cox Proportional Hazards deep neural network used for modeling interactions between a patient's covariates and treatment effectiveness. It was originally proposed by [Katzman et. al (2018)](https://bmcmedresmethodol.biomedcentral.com/articles/10.1186/s12874-018-0482-1) and [implemented in Theano (using Lasagne)](https://github.com/jaredleekatzman/DeepSurv).
 
@@ -15,9 +33,6 @@ Unfortunately, [Theano is no longer supported](https://groups.google.com/forum/#
 
 This is my first Python package. I am sure there are many places where it could be improved. Feedback is always welcome!
 
-## :bookmark_tabs: Documentation
-You can find the complete package's documentation [here](https://deepsurvk.readthedocs.io).
-
 ## :tada: Features
 * Implemented using Keras (using TensorFlow 2)
 * Includes the original datasets together with a proper description of the variables
@@ -25,6 +40,9 @@ You can find the complete package's documentation [here](https://deepsurvk.readt
 * Visualization tools for the most common plots for fast and easy exploration and prototyping
 * Treatment recommender
 * (Basic) parameter optimization using grid search
+
+## :bookmark_tabs: Documentation
+You can find the complete package's documentation [here](https://deepsurvk.readthedocs.io).
 
 ## :page_with_curl: License
 This package uses the MIT license
