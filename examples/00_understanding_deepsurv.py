@@ -6,7 +6,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.5.0
+#       jupytext_version: 1.11.3
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -24,7 +24,7 @@
 #
 # # 00 - Understanding DeepSurv (using Keras)
 # Before anything else, it makes sense to spend some time in understanding
-# how the original DeepSurv works. In this notebook we take an example dataset
+# how the original DeepSurv works. In this notebook, we take an example dataset
 # and go step by step through the algorithm. Please note that the code 
 # here was written with clarity over performance in mind.
 #
@@ -39,7 +39,7 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.keras.models import Sequential, load_model
 from tensorflow.keras.layers import Dense, Dropout, ActivityRegularization
-from tensorflow.keras.optimizers import SGD, Nadam, RMSprop
+from tensorflow.keras.optimizers import Nadam
 from tensorflow.keras.regularizers import l2
 
 from lifelines import utils
@@ -50,14 +50,6 @@ from matplotlib import pyplot as plt
 
 import h5py
 
-# import logzero
-# from logzero import logger
-
-
-# %%
-# Setup logger.
-# logzero.logfile("./logfile.log", maxBytes=1e6, backupCount=2)
-
 
 # %% [markdown]
 # Define paths.
@@ -65,7 +57,7 @@ import h5py
 # %%
 example_file = '00_understanding_deepsurv'
 PATH_DATA = pathlib.Path(r'../deepsurvk/datasets/data')
-PATH_MODELS = pathlib.Path(f'./models/')
+PATH_MODELS = pathlib.Path('./models/')
 
 # Make sure data directory exists.
 if not PATH_DATA.exists():
@@ -73,7 +65,10 @@ if not PATH_DATA.exists():
 
 # If models directory does not exist, create it.
 if not PATH_MODELS.exists():
+    print("Creating models directory in " + str(PATH_MODELS) + "...\t", end="", flush=True)
     PATH_MODELS.mkdir(parents=True)
+    print("DONE!")
+    
 
 
 # %% [markdown]
