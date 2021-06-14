@@ -6,7 +6,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.5.0
+#       jupytext_version: 1.11.3
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -22,7 +22,7 @@
 
 # %% [markdown]
 #
-# # 01 - Using DeepSurvK
+# # 01 - DeepSurvK Quickstart
 # In this notebook, I will show DeepSurvK's basic functionality.
 #
 # Before going forward, I recommend you check the previous notebook,
@@ -38,18 +38,11 @@
 
 # %%
 import numpy as np
-
-from sklearn.preprocessing import StandardScaler
-
-from matplotlib import pyplot as plt
-
 import tensorflow as tf
+from sklearn.preprocessing import StandardScaler
 
 import deepsurvk
 from deepsurvk.datasets import load_whas
-
-# import logzero
-# from logzero import logger
 
 
 # %% [markdown]
@@ -94,6 +87,18 @@ Y_test = Y_scaler.transform(Y_test)
 
 Y_train = Y_train.flatten()
 Y_test = Y_test.flatten()
+
+
+# %% [markdown]
+# > Notice that if you read/have your data as a `pandas` DataFrame, you will
+# > get an error when reshaping `Y_train` (see [issue #81](https://github.com/arturomoncadatorres/deepsurvk/issues/81)). 
+# > That is because a DataFrame doesn't have the `reshape` attribute.
+# >
+# > In such case, you need to do the reshaping as follows:
+# >
+# > ```
+# > Y_scaler = StandardScaler().fit(Y_train.values.reshape(-1, 1))
+# > ```
 
 # %%
 # Sorting
