@@ -109,8 +109,8 @@ Y_test['T'] = Y_scaler.transform(Y_test)
 
 # %%
 params = {'epochs':[500],
-          'n_layers':[1],#, 4],
-          'n_nodes':[2],#, 8], 
+          'n_layers':[1, 4],
+          'n_nodes':[2, 8], 
           'activation':['relu', 'selu'],
           'learning_rate':[0.154],
           'decay':[5.667e-3],

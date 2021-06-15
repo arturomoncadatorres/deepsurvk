@@ -43,6 +43,13 @@ def optimize_hp(X, Y, E, mode='grid', n_splits=3, n_repeats=5, verbose=True, **p
     params: dictionary
         Each key corresponds to a parameter. 
         The values correspond to a list of parameters to be explored.
+        
+        The number of epochs can be defined here. It should also be given as
+        an entry of the dictionary with key `epochs` and value a list
+        comprised of only one element. If the list has more than
+        one element, only the first one will be considered. If number
+        of epochs isn't defined by the user, then a default of 1000 will
+        be used.
             
     Returns
     -------
