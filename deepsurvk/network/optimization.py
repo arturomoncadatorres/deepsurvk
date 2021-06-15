@@ -56,6 +56,18 @@ def optimize_hp(X, Y, E, mode='grid', n_splits=3, n_repeats=5, verbose=True, **p
     [1] Katzman, Jared L., et al. "DeepSurv: personalized treatment recommender system using a Cox proportional hazards deep neural network." BMC medical research methodology 18.1 (2018): 24.
     """
     
+    # Check if number of epochs was defined.
+    if 'epochs' in params:
+        # If yes, extract its value (and remove it from the dictionary,
+        # since it won't be optimized).
+        epochs = params['epochs'][0]
+        params.pop('epochs')
+        
+    else:
+        # If not, set a default value of 1000.
+        epochs = 1000
+        
+    
     # Generating a list of dictionaries with all possible combinations.
     # Trick from https://stackoverflow.com/a/61335465/948768
     keys, values = zip(*params.items())
@@ -109,7 +121,6 @@ def optimize_hp(X, Y, E, mode='grid', n_splits=3, n_repeats=5, verbose=True, **p
 
             # Fit model.
             n_patients_train = X_train.shape[0]
-            epochs = 1000
             dsk.fit(X_train, Y_train, 
                     batch_size=n_patients_train,
                     epochs=epochs, 
@@ -135,7 +146,6 @@ def optimize_hp(X, Y, E, mode='grid', n_splits=3, n_repeats=5, verbose=True, **p
         ended_at = datetime.datetime.now().replace(microsecond=0)
         print ("Optimization ended at: ", end='', flush=True)
         print (ended_at.strftime("%Y-%m-%d %H:%M:%S"))
-        
         print(f"Optimization took {ended_at-started_at}")
         
     

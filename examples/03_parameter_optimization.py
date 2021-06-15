@@ -6,7 +6,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.5.0
+#       jupytext_version: 1.11.3
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -33,7 +33,7 @@
 # In this notebook, we will see how this works in DeepSurvK.
 #
 # This notebook assumes that you have gone through the [basics of DeepSurv](./00_understanding_deepsurv.ipynb)
-# as well as [DeepSurvK's basic usage](./00_using_deepsurvk.ipynb)
+# as well as [DeepSurvK's basic usage](./01_deepsurvk_quickstart.ipynb)
 #
 # ## Preliminaries
 #
@@ -44,14 +44,9 @@ import pathlib
 import numpy as np
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import RandomizedSearchCV, GridSearchCV
 
 import deepsurvk
 from deepsurvk.datasets import load_rgbsg
-
-# import logzero
-# from logzero import logger
-
 
 # %% [markdown]
 # Define paths.
@@ -93,12 +88,18 @@ Y_train['T'] = Y_scaler.transform(Y_train)
 Y_test['T'] = Y_scaler.transform(Y_test)
 
 
-#%% [markdown]
+# %% [markdown]
 # ## (Hyper)parameter optimization
-
+#
 # We will define the parameters that we wish to explore as a dictionary.
 # Notice that all parameters must be given in a list, even if they consist
 # of a single value.
+#
+# We can define the number of epochs (`epochs`) in that same dictionary as well.
+# Technically, we won't optimize this parameter. However, we might
+# want to set it to a given value. In this case, provide only a single value.
+# If more are given, only the first will be considered. If it isn't 
+# defined, a default value of 1000 is used.
 #
 # For this example, we will fix most of the reported parameters 
 # for the RGBSG dataset and optimize only three of them: 
@@ -106,9 +107,10 @@ Y_test['T'] = Y_scaler.transform(Y_test)
 # - `n_nodes` - 2, 8
 # - `activation` - `relu`, `selu`
 
-#%%
-params = {'n_layers':[1, 4],
-          'n_nodes':[2, 8], 
+# %%
+params = {'epochs':[500],
+          'n_layers':[1],#, 4],
+          'n_nodes':[2],#, 8], 
           'activation':['relu', 'selu'],
           'learning_rate':[0.154],
           'decay':[5.667e-3],
@@ -117,7 +119,7 @@ params = {'n_layers':[1, 4],
           'dropout':[0.661],
           'optimizer':['nadam']}
 
-#%% [markdown]
+# %% [markdown]
 # This will results in testing a very small number of 
 # possible combinations (8). Using default values, the optimization 
 # will use 3 folds (as reported in the original paper) and 5 repetitions. 
@@ -130,7 +132,7 @@ params = {'n_layers':[1, 4],
 # Then, we will obtain the best parameters using DeepSurvK's `optimize_hp`.
 # Currently, a raw version of grid search is implemented. In the future, I 
 # plan to expand this to a randomized search.
-# 
+#
 # > *Why not use an existing (hyper)parameter optimization tool?*
 # > 
 # > (Hyper)parameter optimization is a well known issue of deep learning
@@ -149,7 +151,7 @@ params = {'n_layers':[1, 4],
 # (`n_layers = 1`, `n_nodes = 8`, `activation = selu`).
 
 
-#%%
+# %%
 best_params = deepsurvk.optimize_hp(X_train, Y_train, E_train, 
                                     mode='grid', 
                                     n_splits=3, 
@@ -159,16 +161,16 @@ best_params = deepsurvk.optimize_hp(X_train, Y_train, E_train,
 
 print(best_params)
 
-#%% [markdown]
+# %% [markdown]
 # This looks good. Now, as usual, we can just create a new model with the
 # optimized parameters, fit it, and generate predictions.
 
-#%%
+# %%
 dsk = deepsurvk.DeepSurvK(n_features=n_features, E=E_train, **best_params)
 loss = deepsurvk.negative_log_likelihood(E_train)
 dsk.compile(loss=loss)
 
-#%%
+# %%
 callbacks = deepsurvk.common_callbacks()
 epochs = 1000
 history = dsk.fit(X_train, Y_train, 
@@ -177,10 +179,10 @@ history = dsk.fit(X_train, Y_train,
                   callbacks=callbacks,
                   shuffle=False)
 
-#%%
+# %%
 deepsurvk.plot_loss(history)
 
-#%%
+# %%
 Y_pred_test = np.exp(-dsk.predict(X_test))
 c_index_test = deepsurvk.concordance_index(Y_test, Y_pred_test, E_test)
 print(f"c-index of testing dataset = {c_index_test}")
