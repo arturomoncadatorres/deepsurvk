@@ -6,7 +6,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.5.0
+#       jupytext_version: 1.11.3
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -28,22 +28,19 @@
 # works in DeepSurvK.
 #
 # This notebook assumes that you have gone through the [basics of DeepSurv](./00_understanding_deepsurv.ipynb)
-# as well as [DeepSurvK's basic usage](./00_using_deepsurvk.ipynb)
+# as well as [DeepSurvK's basic usage](./01_deepsurvk_quickstart.ipynb)
 #
 # ## Preliminaries
 #
 # Import packages
 
-#%%
+# %%
 import numpy as np
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import StandardScaler
 
 import deepsurvk
 from deepsurvk.datasets import load_rgbsg
-
-# import logzero
-# from logzero import logger
 
 
 # %% [markdown]
@@ -104,16 +101,16 @@ params = {'n_layers':1,
           'dropout':0.661,
           'optimizer':'nadam'}
 
-#%%
+# %%
 dsk = deepsurvk.DeepSurvK(n_features=n_features, 
                           E=E_train,
                           **params)
 
-#%%
+# %%
 loss = deepsurvk.negative_log_likelihood(E_train)
 dsk.compile(loss=loss)
 
-#%%
+# %%
 callbacks = deepsurvk.common_callbacks()
 
 epochs = 1000
@@ -123,17 +120,17 @@ history = dsk.fit(X_train, Y_train,
                   callbacks=callbacks,
                   shuffle=False)
 
-#%%
+# %%
 deepsurvk.plot_loss(history)
 
-#%%
+# %%
 # Perform predictions for test data (sanity check)
 Y_pred_test = np.exp(-dsk.predict(X_test))
 c_index_test = deepsurvk.concordance_index(Y_test, Y_pred_test, E_test)
 print(f"c-index of testing dataset = {c_index_test}")
 
 
-#%% [markdown]
+# %% [markdown]
 # ## Treatment recommendation
 # The original paper has a very clear explanation of how the treatment
 # recommender system works, which is as follows:
@@ -154,11 +151,11 @@ print(f"c-index of testing dataset = {c_index_test}")
 #
 # DeepSurvK provides the function `recommender_function`, which 
 # allows calculating $rec_{ij}(x)$ in a very easy way:
-    
-#%%
+
+# %%
 rec_ij = deepsurvk.recommender_function(dsk, X_test, 'horm_treatment')
 
-#%% [markdown]
+# %% [markdown]
 # > The recommender function can be used to provide personalized treatment 
 # recommendations. We first pass a patient through the network once in 
 # treatment group $i$ and again in treatment group $j$ and take the 
@@ -171,10 +168,10 @@ rec_ij = deepsurvk.recommender_function(dsk, X_test, 'horm_treatment')
 # DeepSurv also has a function to find these subsets of patients 
 # (recommendation and anti-recommendation):
 
-#%%
+# %%
 recommendation_idx, _ = deepsurvk.get_recs_antirecs_index(rec_ij, X_test, 'horm_treatment')
 
-#%% [markdown]
+# %% [markdown]
 # `get_recs_antirecs_index` gives as a second output `antirecommendation_idx`.
 # However, it is nothing else than the negated version of 
 # `recommendation_idx`. Therefore, we will ignore the former and stick with
@@ -184,19 +181,19 @@ recommendation_idx, _ = deepsurvk.get_recs_antirecs_index(rec_ij, X_test, 'horm_
 # To do so, first we need to invert the transformation we did previously
 # on `Y_test` (to bring it back to proper time units).
 
-#%%
+# %%
 Y_test_original = Y_test.copy(deep=True)
 Y_test_original['T'] = Y_scaler.inverse_transform(Y_test)
 
-#%% [markdown]
+# %% [markdown]
 # DeepSurvK provides a function to quickly generate such plot.
 # Notice how this visualization pretty much matches Fig. 6a of
 # the original paper.
 
-#%%
+# %%
 deepsurvk.plot_km_recs_antirecs(Y_test_original, E_test, recommendation_idx)
 
-#%% [markdown]
+# %% [markdown]
 # We can see that the KM curve of the patients that were treated according
 # to the model's recommendation is higher than that of patients that were
 # *not*. This is confirmed by the log-rank statistic with a $p$-value
