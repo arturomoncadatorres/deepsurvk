@@ -7,7 +7,10 @@ assignees: ''
 
 ---
 
-<!--Please note that alternatively, you can just open a pull request with the suggested change. -->
+<!--
+Thank you for taking time to improve the documentation. Please note that
+alternatively, you can just open a pull request with the suggested change.
+-->
 
 #### Describe the issue related to the documentation
 <!--

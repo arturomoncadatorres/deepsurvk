@@ -8,7 +8,7 @@ assignees: ''
 ---
 
 <!--
-Before submitting a bug issue, please make sure that it hasn't been already
+Thank you for taking time to report a bug. Before submitting an issue, please make sure that it hasn't been already
 addressed by searching through the past issues!
 -->
 
@@ -19,7 +19,7 @@ A clear and concise description of what the bug is.
 
 #### Steps/code to reproduce
 <!--
-Please add a minimal example that we can reproduce the error by running the
+Please add a minimal working example that we can reproduce the error by running the
 code. Be as succinct as possible, do not depend on external data. In short, we
 are going to copy-paste your code and we expect to get the same
 result as you.
@@ -39,6 +39,11 @@ Sample code to reproduce the problem
 <!-- Please paste or specifically describe the actual output or traceback. -->
 
 #### Versions
+<!--
+If you are unsure which version you are using, you can use commands like "conda list" or "pip list".
+Moreover, please add the version of other packages that might be relevant to your issue.
+-->
 * DeepSurvK version:
 * Python version:
+* Scikit-learn version:
 * Operating System:

@@ -7,7 +7,14 @@ assignees: ''
 
 ---
 
+<!--
+Thank you for taking time to suggest a feature.
+-->
+
 #### Describe the current situation
+<!--
+Please try to be as specific as possible.
+-->
 
 #### Describe your proposed feature/improvement
 
