@@ -108,6 +108,17 @@ Y_train = Y_train[sort_idx]
 E_train = E_train[sort_idx]
 
 # %% [markdown]
+# > Notice that if you read/have your data as a `pandas` DataFrame, you will
+# > get an error when sorting (see [issue #82](https://github.com/arturomoncadatorres/deepsurvk/issues/82)). 
+# > That is because a DataFrame cannot be sorted like this.
+# >
+# > In such case, you need to do the sorting as follows:
+# >
+# > ```
+# > X_train = X_train.values[sort_idx]
+# > ...
+# > ```
+#
 # ## Create a DeepSurvK model
 # When creating an instance of a DeepSurvK model, we can also define its 
 # parameters. The only mandatory parameters are `n_features` and `E`.
