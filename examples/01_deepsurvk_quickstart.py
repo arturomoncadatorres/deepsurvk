@@ -85,6 +85,8 @@ Y_scaler = StandardScaler().fit(Y_train.reshape(-1, 1))
 Y_train = Y_scaler.transform(Y_train)
 Y_test = Y_scaler.transform(Y_test)
 
+
+# %%
 Y_train = Y_train.flatten()
 Y_test = Y_test.flatten()
 
@@ -139,12 +141,6 @@ dsk = deepsurvk.DeepSurvK(n_features=n_features, E=E_train)
 dsk.summary()
 
 # %% [markdown]
-# Or if you are more the graphical-kind person:
-
-# %%
-tf.keras.utils.plot_model(dsk, show_shapes=True)
-
-# %% [markdown]
 # ## Callbacks
 # As mentioned earlier, it is practical to use Early Stopping in the
 # case of NaNs in loss values. Additionally, it is also a good idea
@@ -172,6 +168,19 @@ history = dsk.fit(X_train, Y_train,
                   callbacks=callbacks,
                   shuffle=False)
 
+
+# %% [markdown]
+# > In some cases, it has been reported that while fitting a model,
+# > the [loss goes to a `NaN` very early](https://github.com/arturomoncadatorres/deepsurvk/issues/83),
+# > making the training process unfeasible, even with the previously defined
+# > callback. I haven't been able to replicate that issue consistently.
+# > 
+# > However, this issue has also [been reported in the original DeepSurv](https://github.com/jaredleekatzman/DeepSurv/issues/14).
+# > Apparently, a potentially good solution for this is to *not* 
+# > standardize your data during the pre-procesing, but rather
+# > normalizing it (i.e., make sure that features are in the range 0-1).
+# > However, remember that scaling is particularly sensitive to
+# > outliers, so be careful!
 
 # %% [markdown]
 # DeepSurvK provides a few wrappers to generate visualizations that are
