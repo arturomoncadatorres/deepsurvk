@@ -124,10 +124,10 @@ def DeepSurvK(n_features=None,
     
     # Validate inputs.
     if n_features is None:
-        raise ValueError(f"n_features is required input.")
+        raise ValueError("n_features is required input.")
     
     if E is None:
-        raise ValueError(f"E is a required input.")
+        raise ValueError("E is a required input.")
         
     if activation not in ['relu', 'selu']:
         raise ValueError(f"{activation} is not a valid activation function.")

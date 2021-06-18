@@ -103,13 +103,13 @@ Y_test['T'] = Y_scaler.transform(Y_test)
 #
 # For this example, we will fix most of the reported parameters 
 # for the RGBSG dataset and optimize only three of them: 
-# - `n_layers` - 1, 4
+# - `n_layers` - 1, 16
 # - `n_nodes` - 2, 8
 # - `activation` - `relu`, `selu`
 
 # %%
-params = {'epochs':[500],
-          'n_layers':[1, 4],
+params = {'epochs':[999],
+          'n_layers':[1, 16],
           'n_nodes':[2, 8], 
           'activation':['relu', 'selu'],
           'learning_rate':[0.154],
@@ -119,19 +119,18 @@ params = {'epochs':[500],
           'dropout':[0.661],
           'optimizer':['nadam']}
 
+
 # %% [markdown]
 # This will results in testing a very small number of 
-# possible combinations (8). Using default values, the optimization 
-# will use 3 folds (as reported in the original paper) and 5 repetitions. 
-# So for each parameter combination, a model will be fitted and evaluated 
-# 15 times. In total, this will result in 120 fits. Notice how this can 
-# result in an exponential increase of computational time required 
+# possible combinations (8). Using a grid search with default values, the 
+# optimization will use 3 folds (as reported in the original paper) and 
+# 5 repetitions. So for each parameter combination, a model will be fitted and 
+# evaluated 15 times. In total, this will result in 120 fits. Notice how this 
+# can result in an exponential increase of computational time required 
 # depending on the number of parameters to be optimized. 
 # Be careful with this, especially if you are using a large dataset!
 #
 # Then, we will obtain the best parameters using DeepSurvK's `optimize_hp`.
-# Currently, a raw version of grid search is implemented. In the future, I 
-# plan to expand this to a randomized search.
 #
 # > *Why not use an existing (hyper)parameter optimization tool?*
 # > 
@@ -141,8 +140,8 @@ params = {'epochs':[500],
 # > using a [Scikit wrapper](https://www.tensorflow.org/api_docs/python/tf/keras/wrappers/scikit_learn)
 # > and even Keras's own [Keras Tuner](https://github.com/keras-team/keras-tuner).
 # > Unfortunately, I couldn't manage to get any of these tools working for
-# > DeepSurvK. This was mainly because DeepSurvK (since it is a survival task)
-# > depends not only of `X` and `Y`, but also `E`. This is a problem
+# > DeepSurvK. This was mainly because DeepSurvK depends not only on `X` and 
+# > `Y`, but also `E` (since it is a survival task). This is a problem
 # > since none of these options support this extra parameter.
 # > Maybe I'm wrong and this could be fixed in a future version.
 # > Contributions are always welcome.
@@ -162,6 +161,21 @@ best_params = deepsurvk.optimize_hp(X_train, Y_train, E_train,
 print(best_params)
 
 # %% [markdown]
+# > Alternatively, DeepSurvK also comes with a randomized hyperparameter
+# > search. For this, call `optimize_hp` with parameter `mode = 'random'`.
+# > Additionally, the number of iterations can be defined with the
+# > parameter `n_iter`. If no value is given, it defaults to 25
+# > (which is actually quite small).
+# > 
+# > When using randomized search:
+# > * For numerical variables: provide the low and high boundary of the
+# > parameter space. Additional values will be ignored.
+# > * For categorical variables: provide the potential values that you
+# > would like to try (just like in a grid search).
+# >
+# > In both cases, providing a single value will guarantee that is always
+# > used (i.e., it will be fixed).
+#
 # This looks good. Now, as usual, we can just create a new model with the
 # optimized parameters, fit it, and generate predictions.
 

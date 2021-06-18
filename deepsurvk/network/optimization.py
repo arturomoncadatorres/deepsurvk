@@ -5,19 +5,15 @@ Functions for (hyper)parameter optimization.
 """
 import datetime
 import numpy as np
-import itertools
 from sklearn.model_selection import RepeatedKFold
 
 import deepsurvk
-
-# import logzero
-# from logzero import logger
 
 __all__ = ['optimize_hp']
 
 
 #%%
-def optimize_hp(X, Y, E, mode='grid', n_splits=3, n_repeats=5, verbose=True, **params):
+def optimize_hp(X, Y, E, mode='grid', n_splits=3, n_repeats=5, n_iter=25, verbose=True, **params):
     """
     Optimize the (hyper)parameters of a DeepSurvK model using 
     cross-validation.
@@ -33,11 +29,17 @@ def optimize_hp(X, Y, E, mode='grid', n_splits=3, n_repeats=5, verbose=True, **p
     mode: string
         Possible values are:
             'grid' (default)
-            'random' TODO
+            'random'
     n_splits: int (optional)
         Number of folds. Default value is 3, as suggested in [1].
     n_repeats: int (optional)
         Number of CV repetition. Default value is 5.
+    n_iter: int (optional)
+        Number of parameter setitngs that will be sampled. 
+        Only valid for 'random' mode. Otherwise, ignored.
+        Default value is 25.
+        Notice there is a trade off between runtime and quality of the 
+        solution. 
     verbose: boolean (optional)
         Define if verbose output is desired (True, default) or not (False)
     params: dictionary
@@ -69,17 +71,15 @@ def optimize_hp(X, Y, E, mode='grid', n_splits=3, n_repeats=5, verbose=True, **p
         # since it won't be optimized).
         epochs = params['epochs'][0]
         params.pop('epochs')
+        print(params)
         
     else:
         # If not, set a default value of 1000.
         epochs = 1000
         
-    
-    # Generating a list of dictionaries with all possible combinations.
-    # Trick from https://stackoverflow.com/a/61335465/948768
-    keys, values = zip(*params.items())
-    params_list = [dict(zip(keys, v)) for v in itertools.product(*values)]
-    
+    # Get parameter list (i.e., a list of dictionaries).
+    params_list = deepsurvk.get_param_list(params, mode, n_iter)
+
     # Compute important parameters.
     n_features = X.shape[1]
     n_combinations = len(params_list)

@@ -34,7 +34,7 @@ def concordance_index(y_true, y_pred, E):
     ----------
     [1] https://github.com/CamDavidsonPilon/lifelines
     """
-    # Check foor NaNs.
+    # Check for NaNs.
     if np.isnan(np.sum(y_pred)):
         c = np.nan
     else:
