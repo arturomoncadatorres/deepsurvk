@@ -10,4 +10,4 @@ Development Lead
 Contributors
 ------------
 
-None yet. Why not be the first?
+Special thanks to my students Foppe Crezee and Femke Janssen for being beta users of DeepSurvK.

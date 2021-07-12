@@ -2,6 +2,12 @@
 History
 =======
 
+0.2.1 (2021-07-12)
+------------------
+
+* Added randomized search (alternative to grid search) for hyperparameter optimization
+
+
 0.2.0 (2020-11-05)
 ------------------
 

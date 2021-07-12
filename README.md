@@ -5,7 +5,7 @@
 <h3 align=center> Implementation of DeepSurv using Keras</h3>
 
 <h3 align="center">
-    
+
 [![PyPI version](https://badge.fury.io/py/deepsurvk.svg)](https://badge.fury.io/py/deepsurvk)
 [![Build Status](https://img.shields.io/travis/arturomoncadatorres/deepsurvk.svg?branch=master)](https://travis-ci.org/arturomoncadatorres/deepsurvk)
 [![Documentation](https://readthedocs.org/projects/deepsurvk/badge/?version=latest)](https://deepsurvk.readthedocs.io/en/latest/?badge=latest)
@@ -39,7 +39,7 @@ This is my first Python package. I am sure there are many places where it could 
 * Designed with data as pandas DataFrames in mind
 * Visualization tools for the most common plots for fast and easy exploration and prototyping
 * Treatment recommender
-* (Basic) parameter optimization using grid search
+* (Basic) hyperparameter optimization using grid and randomized search
 
 ## :bookmark_tabs: Documentation
 You can find the complete package's documentation [here](https://deepsurvk.readthedocs.io).
