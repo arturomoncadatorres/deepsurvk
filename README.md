@@ -42,7 +42,7 @@ This is my first Python package. I am sure there are many places where it could 
 * (Basic) hyperparameter optimization using grid and randomized search
 
 ## :bookmark_tabs: Documentation
-You can find the complete package's documentation [here](https://deepsurvk.readthedocs.io).
+You can find the complete package's documentation [here](https://deepsurvk.readthedocs.io). Unfortunately, I haven't had as much time as I would like to work on it. Alternatively, I strongly recommend you take look at the [example notebooks](https://github.com/arturomoncadatorres/deepsurvk/tree/master/examples).
 
 ## :page_with_curl: License
 This package uses the MIT license
