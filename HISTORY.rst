@@ -2,6 +2,11 @@
 History
 =======
 
+0.2.2 (2021-08-10)
+------------------
+
+* Minor bug fixes, including missing data files in release.
+
 0.2.1 (2021-07-12)
 ------------------
 
