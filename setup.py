@@ -63,6 +63,6 @@ setuptools.setup(
     test_suite='tests',
     tests_require=TEST_REQUIREMENTS,
     url=URL,
-    version='0.2.1', # For a complete description of versioning, see https://www.python.org/dev/peps/pep-0440/
+    version='0.2.2', # For a complete description of versioning, see https://www.python.org/dev/peps/pep-0440/
     zip_safe=False,
 )
