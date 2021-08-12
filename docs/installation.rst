@@ -14,7 +14,13 @@ To install DeepSurvK, run this command in your terminal:
 
     $ pip install deepsurvk
 
-This is the preferred method to install DeepSurvK, as it will always install the most recent stable release.
+If you want to install a specific version, you can run the command:
+
+.. code-block:: console
+
+    $ pip install deepsurvk==0.2.0
+
+However, I recommend to always install the most recent (stable) release, since it probably has important bug fixes.
 
 If you don't have `pip`_ installed, this `Python installation guide`_ can guide
 you through the process.

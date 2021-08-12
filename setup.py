@@ -51,7 +51,7 @@ setuptools.setup(
         ],
     },
     install_requires=REQUIREMENTS,
-    license=LICENSE
+    license=LICENSE,
     long_description=LONG_DESCRIPTION,
     long_description_content_type=LONG_DESC_TYPE,
     include_package_data=True,
